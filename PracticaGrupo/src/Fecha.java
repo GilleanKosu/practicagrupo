@@ -3,12 +3,13 @@
 
 public class Fecha {
 
+	//Variables de la clase
 	private int dia;
 	private int mes;
 	private int agno;
 	
 	//Método constructor, que devuelve mensajes de error si el día, mes o año no son correctos
-	public Fecha (int dia, int mes, int año)  throws Exception{
+	public Fecha (int dia, int mes, int agno)  throws Exception{
 		
 		if(mes == 1 || mes == 3 || mes == 5 || mes == 7 || mes == 8 
 				|| mes == 10 || mes == 12 && dia < 1 || dia > 31)
@@ -24,7 +25,7 @@ public class Fecha {
 	
 		this.dia = dia;
 		this.mes = mes;
-		this.agno = año;
+		this.agno = agno;
 		
 	}
 	
@@ -39,21 +40,21 @@ public class Fecha {
 	
 	//Métodos getters
 	public int getDia() {
-		return dia;
+		return this.dia;
 	}
 
 	public int getMes() {
-		return mes;
+		return this.mes;
 	}
 	
 	public int getAgno() {
-		return agno;
+		return this.agno;
 	}
 
 	//Método para devolver la fecha
-	public String imprimeFecha() {
+	public void imprimeFecha() {
 		
-		return dia + "/" + mes + "/" + agno;
+		System.out.println(dia + "/" + mes + "/" + agno);
 		
 	}
 	
@@ -63,7 +64,8 @@ public class Fecha {
 		
 		if (object instanceof Fecha) {
 			Fecha fecha = (Fecha) object;
-			if (fecha.getDia() == this.getDia() && fecha.getMes() == this.getMes() && fecha.getAgno() == this.getAgno())
+			if (fecha.getDia() == this.getDia() && fecha.getMes() == this.getMes() 
+					&& fecha.getAgno() == this.getAgno())
 				igual = true;
 		}
 		return igual;
