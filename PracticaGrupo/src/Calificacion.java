@@ -1,7 +1,6 @@
 // Danut Moldovan
 public class Calificacion {
 
-	
 	// Variables
 	String asignatura;
 	String nota;
@@ -28,7 +27,11 @@ public class Calificacion {
 		return nota;
 	}
 
-	public void setNota(String nota) {
+	public void setNota(String nota) throws Exception {
+		if (nota != "0" || nota != "1" || nota != "2" || nota != "3" || nota != "4" || nota != "5" || nota != "6"
+				|| nota != "7" || nota != "8" || nota != "9" || nota != "10" || nota != "NE")
+			throw new Exception("Error: valor no admitido.");
+
 		this.nota = nota;
 	}
 
