@@ -1,4 +1,4 @@
-
+//Autor: Antonio Garcia Illescas
 public class DiaClase {
 	
 	//Variables
