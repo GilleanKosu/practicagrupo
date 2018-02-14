@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 
 
+=======
+//Autor: Juanra
+>>>>>>> d150891fbd766c1fd3e9459185dbd3527fe25fa4
 public class Horario {
 	
 	//ATRIBUTOS
