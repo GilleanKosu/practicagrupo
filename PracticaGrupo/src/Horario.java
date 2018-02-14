@@ -1,5 +1,4 @@
-package practicagrupo;
-
+//Autor: Juanra
 public class Horario {
 	
 	//ATRIBUTOS
