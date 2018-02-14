@@ -1,4 +1,4 @@
-package practicagrupo;
+
 
 public class Horario {
 	
@@ -51,7 +51,7 @@ public class Horario {
 	}
 	
 	
-	
+	//AUTOR: JUAN RAMON GARCIA PEREZ
 	
 
 	
