@@ -210,11 +210,11 @@ public class PracticaGrupoMain {
 				case 10:
 					
 					break;
-					
+					//pasar lista.
 				case 11:
 					
 					break;
-					
+					//listar faltas.
 				case 12:
 					
 					break;
