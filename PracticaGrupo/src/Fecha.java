@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 
 //Autor de la clase Fecha: Daniel Moreno Navarro
 
@@ -70,5 +71,13 @@ public class Fecha {
 		}
 		return igual;
 		
-	}	
+	}
+	public boolean existeFecha2 (Fecha fecha) {
+		
+		if ((fecha.getDia() == this.dia) && (fecha.getMes() == this.mes) && (fecha.getAgno() == this.agno)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
