@@ -139,6 +139,7 @@ public class PracticaGrupoMain {
 	}
 	
 	//Autor: Antonio Garcia
+	//Pone el dia completo como que ha faltado
 	public static void ponerFaltaDiaCompleto (ArrayList <Alumno> alumnos) throws Exception {
 		
 		//Variables
@@ -189,6 +190,7 @@ public class PracticaGrupoMain {
 	
 	
 	//Autor: Antonio Garcia
+	//Pone la falta de la hora en concreto
 	public static void ponerFaltasSesion(ArrayList <Alumno> alumnos) throws Exception {
 		
 		//Variables
