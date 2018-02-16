@@ -70,6 +70,7 @@ public class PracticaGrupoMain {
 		else
 			System.out.println("Sin alumnos registrados");
 	}
+	
 	//hecho por:juanra
 	public static void pasarLista(ArrayList<Alumno> lista) {
 		Scanner entrada=new Scanner(System.in);
@@ -109,12 +110,36 @@ public class PracticaGrupoMain {
 			}
 	}
 
+	//Pregunta si se quiere repetir la operacion y devuelve true si el usuario ha indicado que sí,
+	//false en caso contrario
+	public static boolean repetimos() {
+		//Declaración de variables
+		Scanner entrada = new Scanner(System.in);
+		int opcion;
+		
+		do {
+			System.out.println("¿Desea realizar de nuevo la operación?");
+			System.out.println("1. SI");
+			System.out.println("2. NO");
+			opcion=entrada.nextInt();
+			if(opcion!=1 && opcion!=2)
+				System.out.println("Opcion incorrecta. Debe elegir 1 o 2. Pruebe de nuevo");
+		}while(opcion!=1 && opcion!=2);
+		
+		if(opcion==1)
+			return true;
+		else
+			return false;
+	}
+	
 	//Autor modificarAlumno: Daniel Garrido Castro
 	//Muestra la lista de alumnos, pide cuál se quiere modificar
 	public static void modificarAlumno(ArrayList<Alumno> alumnos) throws Exception {
 		//Declaración de variables
 		Scanner entrada = new Scanner(System.in);
-		String dni = new String();
+		String dni = new String();//donde guardar el dni del alumno a modificar
+		String aux = new String();//usada para modificar datos del alumno
+		int opcion;
 		
 		//Muestra la lista de alumnos
 		listarAlumnos(alumnos);
@@ -127,15 +152,112 @@ public class PracticaGrupoMain {
 		for(int i=0; i<alumnos.size(); i++) {
 		
 			if(alumnos.get(i).getDni().equals(dni)) {//Si el dni está en el arraylist
-				
+				do {
+					System.out.println("\n¿Que dato quiere modificar del alumno "+dni+"?");
+					System.out.println("1. DNI");
+					System.out.println("2. Nombre");
+					System.out.println("3. Apellidos");
+					System.out.println("4. Telefono");
+					System.out.println("5. email");
+					System.out.println("6. Salir");
+					opcion=entrada.nextInt();
+					
+					switch(opcion) {
+						case 1:
+							System.out.println("Antiguo dni: "+dni+" ¿Cual es el nuevo DNI?");
+							aux=entrada.nextLine();
+							if(alumnos.contains(new Alumno(aux)))
+								throw new Exception("ERROR! El DNI introducido ya pertenece a otro alumno");
+							else
+								alumnos.get(i).setDni(aux);
+							break;
+						case 2:
+							System.out.println("Antiguo nombre: "+alumnos.get(i).getNombre()+" ¿Cual es el nuevo nombre?");
+							aux=entrada.nextLine();
+							alumnos.get(i).setNombre(aux);
+							break;
+						case 3:
+							System.out.println("Antiguo apellido: "+alumnos.get(i).getApellidos()+" ¿Cual es el nuevo apellido?");
+							aux=entrada.nextLine();
+							alumnos.get(i).setApellidos(aux);
+							break;
+						case 4:
+							System.out.println("Antiguo tlf: "+alumnos.get(i).getTelefono()+" ¿Cual es el nuevo telefono?");
+							aux=entrada.nextLine();
+							alumnos.get(i).setTelefono(aux);
+							break;
+						case 5:
+							System.out.println("Antiguo email: "+alumnos.get(i).getEmail()+" ¿Cual es el nuevo email?");
+							aux=entrada.nextLine();
+							alumnos.get(i).setEmail(aux);
+							break;
+						case 6:
+							System.out.println("Ha elegido salir");
+							break;
+						default:
+							System.out.println("Opción incorrecta. Pruebe con una en [1,6]");
+					}
+					
+				}while(opcion!=6);
 			}
 			else {
 				throw new Exception("No existe el alumno indicado");
 			}
 		}
+	}
+	
+	//Autor matricularAlumnos: Daniel Garrido Castro
+	//Comprueba que existe el Alumno y que no está matriculado de la asignatura.
+	//También comprueba que esa asignatura no esté metida en el arraylist de notas (no lo vamos a matricular de algo donde ya está matriculado).
+	//En ese caso, lo matricula
+	public static void matricularAlumno(ArrayList<Alumno> alumnos) throws Exception{
+		//Declaración de variables
+		Scanner entrada = new Scanner(System.in);
+		String dni = new String();
+		Alumno aux;
+		Calificacion calificacionAux;
+		ArrayList<Calificacion> notas = new ArrayList<Calificacion>();
+		String[] asignaturas= {"FOL", "Sistemas", "Entornos de desarrollo", "Programacion", "Lenguajes de marcas", "Bases de datos"};
+		int opcion;
 		
-		
-		
+		if(alumnos.size()==0)
+			throw new Exception("Error!. Aun no hay alumnos en el listado");
+		else {
+			//Pide cuál se quiere matricular
+			System.out.println("Introd. el dni del alumno a matricular: ");
+			dni=entrada.nextLine();
+			
+			if(!alumnos.contains(new Alumno(dni))) {//El alumno no está en el conjunto
+				throw new Exception("Error!. No existe el alumno "+dni);
+			}
+			else {//El alumno sí está, pedimos la asignatura en que lo vamos a matricular
+				do {
+					System.out.println("¿De qué asignatura se va a matricular?");
+					for(int i=0;i<asignaturas.length;i++) {
+						System.out.println((i)+" "+asignaturas[i]);
+					}
+					opcion=entrada.nextInt();
+					if(opcion<0 || opcion>5)
+						System.out.println("Debe elegir un valor en [0,5]. Pruebe otra vez");
+				}while(opcion<0 || opcion>5);
+				
+				//Si ya está matriculado de esa asignatura, lanzamos excepción
+				for(int i=0; i<alumnos.size();i++) {
+					if(alumnos.get(i).getDni().equals(dni))//selecciono el alumno
+						notas=alumnos.get(i).getNotas();//tengo las notas, ahora he de mirar si la asignatura ya está entre las del alumno
+						for(int j=0;j<notas.size();j++) {
+							if(notas.get(j).getAsignatura().equals(asignaturas[i]))
+								throw new Exception ("Ya matriculado");
+							else {
+								calificacionAux= new Calificacion(asignaturas[i]);
+								calificacionAux.setNota("NE");
+								alumnos.get(i).getNotas().add(calificacionAux);
+							}
+						}
+				}
+					
+			}
+		}
 	}
 	
 	public static void main(String[] args) {
@@ -144,6 +266,7 @@ public class PracticaGrupoMain {
 		int opcionMenu;
 		boolean controlaMenu=false;
 		ArrayList<Alumno> alumnos = new ArrayList<Alumno>();
+		boolean repetir=false;
 		
 		
 		//Menu
@@ -159,7 +282,7 @@ public class PracticaGrupoMain {
 			switch (opcionMenu) {
 			
 				case 1:
-					
+
 					break;
 					
 				case 2:
@@ -173,22 +296,28 @@ public class PracticaGrupoMain {
 		
 		//Modificar alumnos			
 				case 4:
-					boolean algo=false;
-					while(!algo) {
+					repetir=false;
+					while(!repetir) {
 						try {
 							modificarAlumno(alumnos);
-							algo=true;
 						}catch(Exception ex) {
 							ex.getMessage();
 						}
+						repetir=repetimos();
 					}
-
-
 					break;
 		
 		//Matricular alumnos		
 				case 5:
-					//matricularAlumno(alumno);
+					repetir=false;
+					while(!repetir) {
+						try {
+							matricularAlumno(alumnos);
+						}catch(Exception ex) {
+							ex.getMessage();
+						}
+						repetir=repetimos();
+					}
 					break;
 					
 				case 6:
