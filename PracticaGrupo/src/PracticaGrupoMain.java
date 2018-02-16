@@ -391,6 +391,7 @@ public class PracticaGrupoMain {
 			
 			System.out.print("Opcion: ");
 			opcionMenu = teclado.nextInt(); //Opcion elegida del menu
+			teclado.nextLine();
 			
 			switch (opcionMenu) {
 			
