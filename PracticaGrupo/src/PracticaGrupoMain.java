@@ -122,6 +122,7 @@ public class PracticaGrupoMain {
 			System.out.println("1. SI");
 			System.out.println("2. NO");
 			opcion=entrada.nextInt();
+			entrada.nextLine();//Limpiar buffer
 			if(opcion!=1 && opcion!=2)
 				System.out.println("Opcion incorrecta. Debe elegir 1 o 2. Pruebe de nuevo");
 		}while(opcion!=1 && opcion!=2);
@@ -152,53 +153,58 @@ public class PracticaGrupoMain {
 		for(int i=0; i<alumnos.size(); i++) {
 		
 			if(alumnos.get(i).getDni().equals(dni)) {//Si el dni está en el arraylist
-				do {
-					System.out.println("\n¿Que dato quiere modificar del alumno "+dni+"?");
-					System.out.println("1. DNI");
-					System.out.println("2. Nombre");
-					System.out.println("3. Apellidos");
-					System.out.println("4. Telefono");
-					System.out.println("5. email");
-					System.out.println("6. Salir");
-					opcion=entrada.nextInt();
-					
-					switch(opcion) {
-						case 1:
-							System.out.println("Antiguo dni: "+dni+" ¿Cual es el nuevo DNI?");
-							aux=entrada.nextLine();
-							if(alumnos.contains(new Alumno(aux)))
-								throw new Exception("ERROR! El DNI introducido ya pertenece a otro alumno");
-							else
-								alumnos.get(i).setDni(aux);
-							break;
-						case 2:
-							System.out.println("Antiguo nombre: "+alumnos.get(i).getNombre()+" ¿Cual es el nuevo nombre?");
-							aux=entrada.nextLine();
-							alumnos.get(i).setNombre(aux);
-							break;
-						case 3:
-							System.out.println("Antiguo apellido: "+alumnos.get(i).getApellidos()+" ¿Cual es el nuevo apellido?");
-							aux=entrada.nextLine();
-							alumnos.get(i).setApellidos(aux);
-							break;
-						case 4:
-							System.out.println("Antiguo tlf: "+alumnos.get(i).getTelefono()+" ¿Cual es el nuevo telefono?");
-							aux=entrada.nextLine();
-							alumnos.get(i).setTelefono(aux);
-							break;
-						case 5:
-							System.out.println("Antiguo email: "+alumnos.get(i).getEmail()+" ¿Cual es el nuevo email?");
-							aux=entrada.nextLine();
-							alumnos.get(i).setEmail(aux);
-							break;
-						case 6:
-							System.out.println("Ha elegido salir");
-							break;
-						default:
-							System.out.println("Opción incorrecta. Pruebe con una en [1,6]");
-					}
-					
-				}while(opcion!=6);
+				
+				System.out.println("\n¿Que dato quiere modificar del alumno "+dni+"?");
+				System.out.println("1. DNI");
+				System.out.println("2. Nombre");
+				System.out.println("3. Apellidos");
+				System.out.println("4. Telefono");
+				System.out.println("5. email");
+				System.out.println("6. Salir");
+				opcion=entrada.nextInt();
+				entrada.nextLine();//Limpiar buffer
+				
+				switch(opcion) {
+					case 1:
+						System.out.println("Antiguo dni: "+dni+" ¿Cual es el nuevo DNI?");
+						aux=entrada.nextLine();
+						if(alumnos.contains(new Alumno(aux)))
+							throw new Exception("ERROR! El DNI introducido ya pertenece a otro alumno");
+						else {
+							alumnos.get(i).setDni(aux);
+							System.out.println("El dni del alumno ahora es: "+alumnos.get(i).getDni());
+						}
+						break;
+					case 2:
+						System.out.println("Antiguo nombre: "+alumnos.get(i).getNombre()+" ¿Cual es el nuevo nombre?");
+						aux=entrada.nextLine();
+						alumnos.get(i).setNombre(aux);
+						System.out.println("El alumno ahora se llama: "+alumnos.get(i).getNombre());
+						break;
+					case 3:
+						System.out.println("Antiguo apellido: "+alumnos.get(i).getApellidos()+" ¿Cual es el nuevo apellido?");
+						aux=entrada.nextLine();
+						alumnos.get(i).setApellidos(aux);
+						System.out.println("El alumno ahora se apellida: "+alumnos.get(i).getApellidos());
+						break;
+					case 4:
+						System.out.println("Antiguo tlf: "+alumnos.get(i).getTelefono()+" ¿Cual es el nuevo telefono?");
+						aux=entrada.nextLine();
+						alumnos.get(i).setTelefono(aux);
+						System.out.println("El tlf del alumno ahora es: "+alumnos.get(i).getTelefono());
+						break;
+					case 5:
+						System.out.println("Antiguo email: "+alumnos.get(i).getEmail()+" ¿Cual es el nuevo email?");
+						aux=entrada.nextLine();
+						alumnos.get(i).setEmail(aux);
+						System.out.println("El email del alumno ahora es: "+alumnos.get(i).getEmail());
+						break;
+					case 6:
+						System.out.println("Ha elegido salir");
+						break;
+					default:
+						System.out.println("Opción incorrecta. Pruebe con una en [1,6]");
+				}
 			}
 			else {
 				throw new Exception("No existe el alumno indicado");
@@ -236,6 +242,8 @@ public class PracticaGrupoMain {
 						System.out.println((i)+" "+asignaturas[i]);
 					}
 					opcion=entrada.nextInt();
+					entrada.nextLine();//Limpiar buffer
+					
 					if(opcion<0 || opcion>5)
 						System.out.println("Debe elegir un valor en [0,5]. Pruebe otra vez");
 				}while(opcion<0 || opcion>5);
@@ -387,7 +395,7 @@ public class PracticaGrupoMain {
 			switch (opcionMenu) {
 			
 				case 1:
-
+					
 					break;
 					
 				case 2:
@@ -406,7 +414,7 @@ public class PracticaGrupoMain {
 						try {
 							modificarAlumno(alumnos);
 						}catch(Exception ex) {
-							ex.getMessage();
+							System.out.println(ex.getMessage());
 						}
 						repetir=repetimos();
 					}
@@ -419,7 +427,7 @@ public class PracticaGrupoMain {
 						try {
 							matricularAlumno(alumnos);
 						}catch(Exception ex) {
-							ex.getMessage();
+							System.out.println(ex.getMessage());
 						}
 						repetir=repetimos();
 					}
