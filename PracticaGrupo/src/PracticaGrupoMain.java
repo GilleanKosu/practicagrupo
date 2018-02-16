@@ -401,8 +401,8 @@ public class PracticaGrupoMain {
 		
 		//Modificar alumnos			
 				case 4:
-					repetir=false;
-					while(!repetir) {
+					repetir=true;
+					while(repetir) {
 						try {
 							modificarAlumno(alumnos);
 						}catch(Exception ex) {
@@ -414,8 +414,8 @@ public class PracticaGrupoMain {
 		
 		//Matricular alumnos		
 				case 5:
-					repetir=false;
-					while(!repetir) {
+					repetir=true;
+					while(repetir) {
 						try {
 							matricularAlumno(alumnos);
 						}catch(Exception ex) {
