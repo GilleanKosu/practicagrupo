@@ -1,4 +1,3 @@
-//Autor: Juanra
 public class Horario {
 	
 	//ATRIBUTOS
@@ -50,7 +49,7 @@ public class Horario {
 	}
 	
 	
-	
+	//AUTOR: JUAN RAMON GARCIA PEREZ
 	
 
 	
