@@ -72,19 +72,20 @@ public class PracticaGrupoMain {
 	}
 	
 	//hecho por:juanra
+	//pasar lista y poner falta aquel alunmo que no este.
 	public static void pasarLista(ArrayList<Alumno> lista) {
 		Scanner entrada=new Scanner(System.in);
 		int hora;
 		int esta;
 		for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
 			try{
-				lista.contains(i);
+				lista.contains(i);//si no existe el alunmo lanzara un mensaje.
 			}catch(Exception ex) {
 				System.out.println("Alumno no existe");
 			}
 			System.out.println("Alunmno: "+lista.get(i));//obtendremos el alumno.
 			System.out.println("¿Esta?");
-			System.out.println("indica 1 para si o 0 para no");
+			System.out.println("pulsa cualquier tecla para si o 0 para no");
 			esta=entrada.nextInt();
 			if(esta==0) {//si no esta pediremos el dia y la hora que ha faltado.
 				System.out.println("introduce dia");
@@ -92,7 +93,7 @@ public class PracticaGrupoMain {
 				do {
 					System.out.println("¿que hora ha faltado?");
 					hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
-				}while(hora>0 && hora<6);
+				}while(hora>=0 && hora<6);
 				lista.get(i).getFaltas().get(dia).getHorario().faltaHora(hora);
 			}
 		}
@@ -106,7 +107,7 @@ public class PracticaGrupoMain {
 				System.out.println("Alumno no existe");
 			}
 			ArrayList<DiaClase> faltas = lista.get(i).getFaltas();//obtenemos lista faltas
-			System.out.println(faltas);//imprimimos faltas.
+			System.out.println(faltas.get(i).getHorario().getSesiones());//imprimimos faltas.
 			}
 	}
 
@@ -478,6 +479,13 @@ public class PracticaGrupoMain {
 					break;
 					//pasar lista.
 				case 11:
+					// Llamamos al metodo
+					
+					try {
+						pasarLista(alumnos);
+					} catch (Exception ex){
+						System.out.println(ex.getMessage());
+					}
 					
 					break;
 					//listar faltas.
