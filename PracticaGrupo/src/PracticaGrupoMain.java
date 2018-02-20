@@ -295,6 +295,7 @@ public class PracticaGrupoMain {
 	//En ese caso, lo matricula
 	public static void matricularAlumno(ArrayList<Alumno> alumnos) throws Exception{
 		//Declaración de variables
+			
 		Scanner entrada = new Scanner(System.in);
 		String dni = new String();
 		Calificacion calificacionAux;
