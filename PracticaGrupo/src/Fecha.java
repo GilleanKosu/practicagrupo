@@ -58,7 +58,7 @@ public class Fecha {
 	//Método para devolver la fecha
 	public void imprimeFecha() {
 		
-		System.out.println(dia + "/" + mes + "/" + agno);
+		System.out.println(this.dia + "/" + this.mes + "/" + this.agno);
 		
 	}
 	

@@ -26,7 +26,6 @@ public class Alumno {
 		this.faltas = new ArrayList<DiaClase>();
 		this.notas = new ArrayList<Calificacion>();
 	}
-	
 	//Getters (devuelven el atributo correspondiente)
 	public String getDni() {
 		return this.dni;
