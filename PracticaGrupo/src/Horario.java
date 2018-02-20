@@ -2,11 +2,12 @@ public class Horario {
 	
 	//ATRIBUTOS
 	
-	private char sesiones[]=new char[6];
+	private char sesiones[];
 	
 	//CONSTRUCTOR
 	
 	public Horario() {
+		sesiones=new char[6];
 		sesiones[0]=' ';
 		sesiones[1]=' ';
 		sesiones[2]=' ';
