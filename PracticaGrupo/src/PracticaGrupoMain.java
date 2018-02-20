@@ -141,6 +141,7 @@ public class PracticaGrupoMain {
 		String dni = new String();//donde guardar el dni del alumno a modificar
 		String aux = new String();//usada para modificar datos del alumno
 		int opcion;
+		boolean encontrado=false;
 		
 		//Muestra la lista de alumnos
 		listarAlumnos(alumnos);
@@ -150,10 +151,10 @@ public class PracticaGrupoMain {
 		dni=entrada.nextLine();
 		
 		//Recorro la lista de alumnos para ver si existe el dni
-		for(int i=0; i<alumnos.size(); i++) {
+		for(int i=0; i<alumnos.size() && !encontrado; i++) {
 		
 			if(alumnos.get(i).getDni().equals(dni)) {//Si el dni está en el arraylist
-				
+				encontrado=true;
 				System.out.println("\n¿Que dato quiere modificar del alumno "+dni+"?");
 				System.out.println("1. DNI");
 				System.out.println("2. Nombre");
@@ -206,10 +207,10 @@ public class PracticaGrupoMain {
 						System.out.println("Opción incorrecta. Pruebe con una en [1,6]");
 				}
 			}
-			else {
-				throw new Exception("No existe el alumno indicado");
-			}
+			
 		}
+		if(!encontrado)
+			throw new Exception("No existe el alumno indicado");
 	}
 	
 	//Autor matricularAlumnos: Daniel Garrido Castro
