@@ -159,7 +159,7 @@ public class PracticaGrupoMain {
 			}catch(Exception ex) {
 				System.out.println("Alumno no existe");
 			}
-			System.out.println("Alunmno: "+lista.get(i));//obtendremos el alumno.
+			System.out.println("Alunmno: "+lista.get(i).getNombre()+" "+lista.get(i).getApellidos());//obtendremos el alumno.
 			System.out.println("¿Esta?");
 			System.out.println("pulsa cualquier tecla para si o 0 para no");
 			esta=entrada.nextInt();
@@ -169,7 +169,7 @@ public class PracticaGrupoMain {
 				do {
 					System.out.println("¿que hora ha faltado?");
 					hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
-				}while(hora>=0 && hora<6);
+				}while(hora<0 && hora>5);
 				lista.get(i).getFaltas().get(dia).getHorario().faltaHora(hora);
 			}
 		}
@@ -183,7 +183,7 @@ public class PracticaGrupoMain {
 				System.out.println("Alumno no existe");
 			}
 			ArrayList<DiaClase> faltas = lista.get(i).getFaltas();//obtenemos lista faltas
-			System.out.println(faltas.get(i).getHorario().getSesiones());//imprimimos faltas.
+			System.out.println("alumno: "+lista.get(i).getNombre()+"faltas: "+faltas.get(i).getHorario().getSesiones());//imprimimos faltas.
 			}
 	}
 
@@ -658,6 +658,11 @@ public class PracticaGrupoMain {
 					break;
 					//listar faltas.
 				case 12:
+					try {
+						listarFaltas(alumnos);
+					}catch (Exception ex) {
+						System.out.println("no hay alumnos");
+					}
 					
 					break;
 				
