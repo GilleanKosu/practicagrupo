@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class PracticaGrupoMain {
@@ -109,7 +110,7 @@ public class PracticaGrupoMain {
 			System.out.println(faltas);//imprimimos faltas.
 			}
 	}
-
+	
 	//Pregunta si se quiere repetir la operacion y devuelve true si el usuario ha indicado que sí,
 	//false en caso contrario
 	public static boolean repetimos() {
@@ -264,6 +265,32 @@ public class PracticaGrupoMain {
 				}
 					
 			}
+		}
+	}
+	
+	//Autor: Antonio Garcia
+	//Mostrar las calificaciones
+	
+	public static void muestraCalificaciones (ArrayList <Alumno> alumnos) throws Exception {
+		
+		String dniAlumno;
+		int posicionAlumno;
+		
+		Scanner entrada = new Scanner (System.in);
+		
+		System.out.println("Introduzca el nombre del alumno");
+		dniAlumno=entrada.nextLine();
+		
+		
+		if (alumnos.contains(dniAlumno) == false) {
+			System.out.println("El alumno introducido no existe en este centro");
+		}
+		
+		posicionAlumno=alumnos.lastIndexOf(dniAlumno);
+		
+		for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++)  {
+			
+			System.out.println(alumnos.get(posicionAlumno).getNotas().get(i).getNota());
 		}
 	}
 	
