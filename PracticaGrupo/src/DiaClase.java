@@ -10,26 +10,31 @@ public class DiaClase {
 	//Constructores
 	
 	public DiaClase (Fecha dia) {
-		Horario objeto = new Horario ();
-		this.dia=dia;
-		this.sesiones=objeto;
+		this.sesiones = new Horario ();
+		try {
+			this.dia = new Fecha(dia.getDia(), dia.getMes(), dia.getAgno());
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		} 
 	}
 	
 	
 	//Metodos
 	
 	public void setDia (Fecha dia) {
-		this.dia=dia;
+		this.dia = dia;
 	}
 	
-	public Fecha getDia () {
+	public Fecha getDia() {
 		return this.dia;
 	}
-	
-	public Horario getHorario () {
+
+
+	public Horario getHorario() {
 		return this.sesiones;
 	}
-	
+
+
 	// Sobrecarga del método equals de la clase Object
 	public boolean equals(Object object){
 		
