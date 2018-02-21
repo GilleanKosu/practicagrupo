@@ -1,12 +1,7 @@
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
-=======
 import java.util.*;
-
-
->>>>>>> 49cfaecdf4e9b681222a9b1d4f449d93611b31cd
 
 public class PracticaGrupoMain {
 	
