@@ -382,7 +382,7 @@ public class PracticaGrupoMain {
 	}
 	
 	//Autor: Antonio Garcia
-	//Mostrar las calificaciones
+	//8. Mostrar las calificaciones
 	
 	public static void muestraCalificaciones (ArrayList <Alumno> alumnos) throws Exception {
 		
@@ -391,7 +391,7 @@ public class PracticaGrupoMain {
 		
 		Scanner entrada = new Scanner (System.in);
 		
-		System.out.println("Introduzca el nombre del alumno");
+		System.out.println("Introduzca el dni del alumno");
 		dniAlumno=entrada.nextLine();
 		
 		
@@ -408,7 +408,7 @@ public class PracticaGrupoMain {
 	}
 	
 	//Autor: Antonio Garcia
-	//Pone el dia completo como que ha faltado
+	//9. Poner el dia completo como que ha faltado
 	public static void ponerFaltaDiaCompleto (ArrayList <Alumno> alumnos) throws Exception {
 		
 		//Variables
@@ -459,13 +459,15 @@ public class PracticaGrupoMain {
 	
 	
 	//Autor: Antonio Garcia
-	//Pone la falta de la hora en concreto
+	//10. Poner la falta de la hora en concreto
 	public static void ponerFaltasSesion(ArrayList <Alumno> alumnos) throws Exception {
 		
 		//Variables
 		
 		String dni;
 		int dia, mes, agno, horaFalta;
+		Fecha fechaDia;
+		char [] sesiones;
 		
 		//Entradas
 		Scanner entrada = new Scanner (System.in);
@@ -486,7 +488,7 @@ public class PracticaGrupoMain {
 		horaFalta=entrada.nextInt();
 		
 		
-		Fecha fechaDia = new Fecha (dia, mes, agno);//Creacion del objeto con los datos introducidos
+		fechaDia = new Fecha (dia, mes, agno);//Creacion del objeto con los datos introducidos
 		
 		//Preguntamos si existe el alumno
 		if (alumnos.contains(new Alumno(dni))) {
@@ -497,12 +499,26 @@ public class PracticaGrupoMain {
 				//Recorremos el ArrayList de las faltas
 				for (int j = 0; j < alumnos.get(i).getFaltas().size(); j++) {
 					
-					//Preguntamos que dia coindice con el intoducido
-					if (alumnos.get(i).getFaltas().get(j).getDia() == fechaDia) {
+					sesiones = alumnos.get(i).getFaltas().get(j).getHorario().getSesiones();
+					
+					if (sesiones [horaFalta] != ' ') {//Si el almno tiene una falta genera una excepcion
 						
-						alumnos.get(i).getFaltas().get(j).getHorario().faltaHora(horaFalta);//Le ponemos las faltas de esa hora
+						throw new Exception ("El alumno ya tiene falta a esa hora");
+						
+					} else { //Si no la tiene introducimos a esa hora la falta
+						
+						//Preguntamos que dia coindice con el intoducido
+						if (alumnos.get(i).getFaltas().get(j).getDia() == fechaDia) {
+							
+							alumnos.get(i).getFaltas().get(j).getHorario().faltaHora(horaFalta);//Le ponemos las faltas de esa hora
+							
+						}
 						
 					}
+						
+					
+					
+					
 				}
 				
 			}
