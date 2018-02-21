@@ -45,7 +45,8 @@ public class Horario {
 	
 	public void imprimeHora() {
 		for(int i=0;i<sesiones.length;i++) {
-			System.out.println(sesiones[i]+"/");
+			System.out.print(sesiones[i]+"/");
+			
 		}
 	}
 	

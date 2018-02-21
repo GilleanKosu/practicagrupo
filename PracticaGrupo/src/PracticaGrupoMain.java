@@ -188,7 +188,7 @@ public class PracticaGrupoMain {
 							System.out.println("¿que hora ha faltado?[1,6]");
 							hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
 							diaClaseAux = new DiaClase(fechaAux);
-							diaClaseAux.getHorario().faltaHora(falta);
+							diaClaseAux.getHorario().faltaHora(hora);
 							lista.get(i).getFaltas().add(diaClaseAux);
 						}while(hora<1 || hora>6);
 						//HACER ALGO CON LA HORA ELEGIDA
@@ -199,6 +199,7 @@ public class PracticaGrupoMain {
 						lista.get(i).getFaltas().add(diaClaseAux);
 					}
 				}
+				System.out.println();
 			}
 		}
 	}
