@@ -10,19 +10,26 @@ public class PracticaGrupoMain {
 		System.out.println("\n 1. Dar de alta alumno \n 2. Dar de baja alumnos \n 3. Listar los alumnos \n 4. Modificar los alumnos \n 5. Matricular los alumnos \n 6. Dar de baja de una asignatura \n 7. Introducir calificación trimestral \n 8. Listar calificaciones de alumnos \n 9. Poner una falta (dia completo) \n 10. Poner una falta (en una sesion) \n 11. Pasar lista \n 12. Listar faltas \n 13. Salir \n");
 	}
 	
-	public static void DarAltaAlumno(ArrayList<Alumno> alumnos, Alumno al) {
+	public static void ordenarAlumnos(ArrayList<Alumno> alumnos, Alumno al) {
 		
+		boolean parar = false;
 		
 		if(alumnos.size()==0) {
 			
 			alumnos.add(al);
 			
 		}else {
-			for(int i = 1; i < alumnos.size(); i++) {
+			for(int i = 0; i < alumnos.size() && parar == false; i++) {
 				
-				if(alumnos.get(i).getApellidos().compareToIgnoreCase(al.getApellidos())>0) {
-					
+				//if(alumnos.get(i).getApellidos().compareToIgnoreCase(al.getApellidos())<0) {
+					System.out.println(al.getApellidos()+">"+alumnos.get(i).getApellidos()+"???");
+					System.out.println(al.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos()));
+				if (al.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos())>0) {
+					System.out.println(al.getApellidos()+">"+alumnos.get(i).getApellidos()+"???");
+					System.out.println("Inserto "+al.getApellidos()+" en la posicion "+i);
 					alumnos.add(i,al);
+					
+					parar = true;
 				}
 			}
 		}
@@ -59,7 +66,7 @@ public class PracticaGrupoMain {
 		if(alumnos.contains(nuevoAlumno)) {
 			throw new Exception ("Error. El alumno ya existe.\n");
 		}else {
-			DarAltaAlumno(alumnos, nuevoAlumno);
+			ordenarAlumnos(alumnos, nuevoAlumno);
 		//alumnos.add(nuevoAlumno);
 		System.out.println("Alumno añadido.\n");
 		}
@@ -159,6 +166,7 @@ public class PracticaGrupoMain {
 	public static void listarAlumnos(ArrayList<Alumno> alumnos) throws Exception{
 		if(alumnos.size()>0) {//En caso de que no esté vacío, recorremos el ArrayList y mostramos algunos datos
 			System.out.println("\nListado de alumnos: ");
+			System.out.println("\nHay "+alumnos.size()+"alumnos: ");
 			for(int i=0; i<alumnos.size(); i++) {
 				System.out.println(alumnos.get(i).getDni()+" "+alumnos.get(i).getApellidos()+", "+alumnos.get(i).getNombre());
 			}
