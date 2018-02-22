@@ -9,7 +9,25 @@ public class PracticaGrupoMain {
 		System.out.println(" 1. Dar de alta alumno \n 2. Dar de baja alumnos \n 3. Listar los alumnos \n 4. Modificar los alumnos \n 5. Matricular los alumnos \n 6. Dar de baja de una asignatura \n 7. Introducir calificación trimestral \n 8. Listar calificaciones de alumnos \n 9. Poner una falta (dia completo) \n 10. Poner una falta (en una sesion) \n 11. Pasar lista \n 12. Listar faltas \n 13. Salir \n");
 	}
 	
-
+	public static void DarAltaAlumno(ArrayList<Alumno> alumnos, Alumno al) {
+		
+		
+		if(alumnos.size()==0) {
+			
+			alumnos.add(al);
+			
+		}else {
+			for(int i = 1; i < alumnos.size(); i++) {
+				
+				if(alumnos.get(i).getApellidos().compareToIgnoreCase(al.getApellidos())>0) {
+					
+					alumnos.add(i,al);
+				}
+			}
+		}
+	}
+					
+	
 	//Método hecho por: Daniel Moreno Navarro
 	public static void altaAlumno (ArrayList<Alumno> alumnos) throws Exception {
 		
@@ -38,10 +56,11 @@ public class PracticaGrupoMain {
 		//Comprobamos que el alumno no esté ya en el ArrayList. Si está, devolvemos la excepción
 		//y si no está, lo añadimos
 		if(alumnos.contains(nuevoAlumno)) {
-			throw new Exception ("Error. El alumno ya existe.");
+			throw new Exception ("Error. El alumno ya existe.\n");
 		}else {
-		alumnos.add(nuevoAlumno);
-		System.out.println("Alumno añadido.");
+			DarAltaAlumno(alumnos, nuevoAlumno);
+		//alumnos.add(nuevoAlumno);
+		System.out.println("Alumno añadido.\n");
 		}
 	}
 
@@ -478,95 +497,44 @@ public class PracticaGrupoMain {
 			
 			switch (opcionMenu) {
 			
+				//Método dar de alta alumno (Daniel Moreno)
 				case 1:
 					
-					Scanner entrada1 = new Scanner(System.in);
-					
+					//Variables
 					boolean repetir1 = true;
 					int opcion1;
 					
-					do {
-						
-						try {			
+					//Bucle para repetir la opción de dar de alta si se desea
+					while(repetir1 == true) {
+						try {
 							PracticaGrupoMain.altaAlumno(alumnos);
-						} catch (Exception ex) {
-						System.out.println(ex.getMessage());
-						}System.out.println();
-						
-						System.out.println("¿Añadir nuevo alumno?");
-						System.out.println("1. Sí - 2. No");
-						opcion1 = entrada1.nextInt();
-						
-						switch(opcion1) {
-						
-						case 1:
-							
-							System.out.println();
-							
-							break;
-							
-						case 2:
-							
-							System.out.println("Fin de la operación.");
-							System.out.println();
-							repetir1 = false;
-							
-							break;
-							
-						default:
-							
-							System.out.println("Opción incorrecta.");
-							repetir1 = false;
-							
+						}catch(Exception ex) {
+							System.out.println(ex.getMessage());
 						}
-					}while(repetir1 == true);
+						repetir1 = repetimos();
+					}
 					
 					break;
-					
+				
+					//Método dar de baja alumno (Daniel Moreno)
 				case 2:
 					
-					Scanner entrada2 = new Scanner(System.in);
-					
+					//Variables
 					boolean repetir2 = true;
 					int opcion2;
 					
-					do {
-						
-						try {			
-								PracticaGrupoMain.bajaAlumno(alumnos);
+					//Bucle para repetir la opción de dar de alta si se desea
+					while(repetir2 == true) {
+					
+						try {
+							PracticaGrupoMain.bajaAlumno(alumnos);
 											
 						} catch (Exception ex) {
 							System.out.println(ex.getMessage());
-						}System.out.println();
-						
-						System.out.println("¿Dar de baja otro alumno?");
-						System.out.println("1. Sí - 2. No");
-						opcion1 = entrada2.nextInt();
-						
-						switch(opcion1) {
-							
-							case 1:
-								
-								System.out.println();
-								
-								break;
-								
-							case 2:
-								
-								System.out.println("Fin de la operación.");
-								System.out.println();
-								repetir1 = false;
-								
-								break;
-								
-							default:
-								
-								System.out.println("Opción incorrecta.");
-								repetir1 = false;
-								
-							}
-					}while(repetir2 == true);
-								
+						}
+						repetir2 = repetimos();
+					}
+					
 					break;
 		
 		//Listar los alumnos		
