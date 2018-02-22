@@ -326,7 +326,7 @@ public class PracticaGrupoMain {
 			System.out.println("El alumno introducido no existe en este centro");
 		}
 		
-		posicionAlumno=alumnos.lastIndexOf(dniAlumno);
+		posicionAlumno=alumnos.indexOf(dniAlumno);
 		
 		for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++)  {
 			
@@ -361,56 +361,57 @@ public class PracticaGrupoMain {
 		
 		Fecha fechaDia = new Fecha (dia, mes, agno);//Creacion del objeto con los datos introducidos
 		
+		
 		//Preguntamos si existe el alumno
 		if (alumnos.contains(new Alumno(dni))) {
 			
 			//Recorremos el Araylist de Alumno
 			for (int i = 0; i < alumnos.size() && faltaAsignada==false; i++) {
+				
+				System.out.print(alumnos.get(i).getDni().equals(dni));
+				
 				if(alumnos.get(i).getDni().equals(dni)) {
+					
 					//Primero vemos si el alumno tiene alguna falta o no
 					if(alumnos.get(i).getFaltas().size()==0) {
 						diaClaseAux = new DiaClase(fechaDia);
 						diaClaseAux.getHorario().faltaDiaEntero();
 						alumnos.get(i).getFaltas().add(diaClaseAux);
 						faltaAsignada=true;
-					}
-					else {//Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
-						if(alumnos.get(i).getFaltas().contains(fechaDia)) {
-							System.out.println("La falta es el mismo dia");
-							alumnos.get(i).getFaltas().remove(fechaDia);
-							diaClaseAux = new DiaClase(fechaDia);
-							diaClaseAux.getHorario().faltaDiaEntero();
-							alumnos.get(i).getFaltas().add(diaClaseAux);
-							//alumnos.get(i).getFaltas().get( alumnos.get(i).getFaltas().indexOf(fechaDia) ).getHorario().faltaDiaEntero();
-							faltaAsignada=true;
-						}
-						else {//Tiene faltas, pero no ese dia
-							System.out.println("No funciona bien el contains");
-							diaClaseAux = new DiaClase(fechaDia);
-							diaClaseAux.getHorario().faltaDiaEntero();
-							alumnos.get(i).getFaltas().add(diaClaseAux);
-							faltaAsignada=true;
-						}
+						
+					} else {//Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
+						
+							for (int j = 0; j <alumnos.get(i).getFaltas().size(); j ++) {
+								
+								if (alumnos.get(i).getFaltas().get(j).getDia().equals(fechaDia)) { //Si tiene el mismo dia se borra y se sustituye
+									alumnos.get(i).getFaltas().remove(j);
+									diaClaseAux = new DiaClase(fechaDia);
+									diaClaseAux.getHorario().faltaDiaEntero();
+									alumnos.get(i).getFaltas().add(diaClaseAux);
+									faltaAsignada=true;
+									
+								} else {//Tienes faltas pero de ese dia no
+									
+									diaClaseAux = new DiaClase(fechaDia);
+									diaClaseAux.getHorario().faltaDiaEntero();
+									alumnos.get(i).getFaltas().add(diaClaseAux);
+									faltaAsignada=true;
+									
+								}
+									
+							}
+						
+						
 					}
 
 				}
-			/*	//Recorremos el ArrayList de las faltas
-				for (int j = 0; j < alumnos.get(i).getFaltas().size(); j++) {
-					
-					//Preguntamos que dia coindice con el intoducido
-					if (alumnos.get(i).getFaltas().get(j).getDia() == fechaDia) {
-						
-						alumnos.get(i).getFaltas().get(j).getHorario().faltaDiaEntero(); //Le ponemos las faltas de ese dia
-						
-					}
-				}*/
 				
 			}
 			
 		} else {
 			throw new Exception ("No existe el alumno");
 		}
-
+		
 	}
 	
 	
@@ -770,7 +771,7 @@ public class PracticaGrupoMain {
 						
 					} catch (Exception ex) {
 
-						ex.getMessage();
+						System.out.print(ex.getMessage());
 						
 					}
 					
@@ -781,7 +782,7 @@ public class PracticaGrupoMain {
 					break;
 					
 				case 10:
-					String dni="345345";
+					String dni="11";
 					Fecha faltas=null;
 				
 				try {

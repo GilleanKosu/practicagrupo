@@ -81,12 +81,5 @@ public class Fecha {
 		return igual;
 		
 	}
-	public boolean existeFecha2 (Fecha fecha) {
-		
-		if ((fecha.getDia() == this.dia) && (fecha.getMes() == this.mes) && (fecha.getAgno() == this.agno)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	
 }
