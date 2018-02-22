@@ -420,10 +420,12 @@ public class PracticaGrupoMain {
 	public static void ponerFaltasSesion(ArrayList <Alumno> alumnos, String dni, Fecha fechaDia) throws Exception {
 		
 		//Variables
-		DiaClase diaClaseAux;
+		DiaClase diaClaseAux=null;
 		int horaFalta=0;
 		char [] sesiones;
 		boolean faltaAsignada=false;
+		boolean mismoDia=false;
+		int posicion=-1;
 		
 		//Entradas
 		Scanner entrada = new Scanner (System.in);
@@ -437,7 +439,7 @@ public class PracticaGrupoMain {
 				
 		}	
 
-		
+		System.out.println("Voy a poner falta el dia: "+fechaDia.getDia()+"/"+fechaDia.getMes()+"/"+fechaDia.getAgno());
 		
 		//Preguntamos si existe el alumno
 		if (alumnos.contains(new Alumno(dni))) {
@@ -448,6 +450,8 @@ public class PracticaGrupoMain {
 					//Cojo el arrayList de faltas del alumno
 					ArrayList<DiaClase> faltas=alumnos.get(i).getFaltas();
 					if(faltas.size()==0) {
+						//**********************************************************************
+						System.out.println("El alumno no tenia faltas");
 						diaClaseAux = new DiaClase(fechaDia);
 						diaClaseAux.getHorario().faltaHora(horaFalta);
 						alumnos.get(i).getFaltas().add(diaClaseAux);
@@ -455,51 +459,44 @@ public class PracticaGrupoMain {
 					}
 					else {//El alumno ya tiene faltas
 						//Buscamos en su arraylist faltas si tiene alguna el mismo dia
-						for(int j=0; j<faltas.size();j++) {
-							if(fechaDia.getDia()  == faltas.get(j).getDia().getDia() && fechaDia.getMes()==faltas.get(j).getDia().getMes() 
-									&& fechaDia.getAgno()  == faltas.get(j).getDia().getAgno()) {
-								//Ahora hay que ver si tiene falta esa hora concreta
-								sesiones=faltas.get(j).getHorario().getSesiones();
-								if(sesiones[horaFalta-1]=='F') {
-									throw new Exception ("El alumno ya tiene falta ese dia en esa sesion");
-								}
-								else {
-									diaClaseAux = new DiaClase(fechaDia);
-									diaClaseAux.getHorario().faltaHora(horaFalta);
-									alumnos.get(i).getFaltas().add(diaClaseAux);
-									faltaAsignada=true;
-								}
-									
+						//¿Tiene faltas el mismo dia?
+						System.out.println("El alumno SI TENIA YA faltas");
+						for(int j=0;(j<faltas.size()) && (mismoDia==false);j++) {
+							
+							if(faltas.get(j).getDia().equals(fechaDia)) {
+								mismoDia=true;
+								posicion=j;
+								diaClaseAux=faltas.get(j);
+								//sesiones=faltas.get(j).getHorario().getSesiones();//Guardo las sesiones
 							}
+								
 						}
 						
-					}
-				}
-			/*	//Recorremos el ArrayList de las faltas
-				for (int j = 0; j < alumnos.get(i).getFaltas().size(); j++) {
-					
-					sesiones = alumnos.get(i).getFaltas().get(j).getHorario().getSesiones();
-					
-					if (sesiones [horaFalta] != ' ') {//Si el almno tiene una falta genera una excepcion
-						
-						throw new Exception ("El alumno ya tiene falta a esa hora");
-						
-					} else { //Si no la tiene introducimos a esa hora la falta
-						
-						//Preguntamos que dia coindice con el intoducido
-						if (alumnos.get(i).getFaltas().get(j).getDia() == fechaDia) {
+						if(mismoDia==true) {
+							System.out.println("El alumno tenia faltas EL MISMO DIA");
+							//Comprobamos si tiene falta a la misma hora
+							if(diaClaseAux.getHorario().getSesiones()[horaFalta-1]=='F') {
+								throw new Exception ("El alumno ya tiene falta ese dia en esa sesion");
+							}
+							else {//Tiene falta el mismo dia, pero en una sesion (hora) distinta, asi que añadimos la nueva falta
+								System.out.println("Voy a ponerle falta a "+(horaFalta-1)+" hora");
+								alumnos.get(i).getFaltas().get(posicion).getHorario().faltaHora(horaFalta);
+								//diaClaseAux.getHorario().faltaHora(horaFalta-1);
+								//alumnos.get(i).getFaltas().add(diaClaseAux);
+								faltaAsignada=true;
+							}
 							
-							alumnos.get(i).getFaltas().get(j).getHorario().faltaHora(horaFalta);//Le ponemos las faltas de esa hora
 							
 						}
-						
+						else {//no tiene faltas en ese dia
+							System.out.println("La falta es otro dia distinto");
+							diaClaseAux = new DiaClase(fechaDia);
+							diaClaseAux.getHorario().faltaHora(horaFalta);
+							alumnos.get(i).getFaltas().add(diaClaseAux);
+							faltaAsignada=true;
+						}	
 					}
-						
-					
-					
-					
-				}*/
-				
+				}		
 			}
 			
 		} else {
@@ -586,7 +583,7 @@ public class PracticaGrupoMain {
 					System.out.println("alumno: "+lista.get(i).getNombre());
 					for(int j=0; j<lista.get(i).getFaltas().size();j++) {
 						fechaAux=lista.get(i).getFaltas().get(j).getDia();
-						System.out.println("Dia: "+fechaAux.getDia()+"/"+fechaAux.getMes()+"/"+fechaAux.getAgno());
+						System.out.println("\nDia: "+fechaAux.getDia()+"/"+fechaAux.getMes()+"/"+fechaAux.getAgno());
 						lista.get(i).getFaltas().get(j).getHorario().imprimeHora();
 					}
 				}
@@ -789,7 +786,7 @@ public class PracticaGrupoMain {
 					faltas = new Fecha(1,1,2019);
 				} catch (Exception ex) {
 					
-					ex.getMessage();
+					System.out.println(ex.getMessage());
 				}
 					try {
 						
@@ -797,7 +794,7 @@ public class PracticaGrupoMain {
 						
 					} catch (Exception ex) {
 
-						ex.getMessage();
+						System.out.println(ex.getMessage());
 						
 					}
 					
