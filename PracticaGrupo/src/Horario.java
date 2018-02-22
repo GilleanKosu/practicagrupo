@@ -2,11 +2,12 @@ public class Horario {
 	
 	//ATRIBUTOS
 	
-	private char sesiones[]=new char[6];
+	private char sesiones[];
 	
 	//CONSTRUCTOR
 	
 	public Horario() {
+		sesiones=new char[6];
 		sesiones[0]=' ';
 		sesiones[1]=' ';
 		sesiones[2]=' ';
@@ -44,7 +45,8 @@ public class Horario {
 	
 	public void imprimeHora() {
 		for(int i=0;i<sesiones.length;i++) {
-			System.out.println(sesiones[i]+"/");
+			System.out.print(sesiones[i]+"/");
+			
 		}
 	}
 	

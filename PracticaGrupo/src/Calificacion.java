@@ -16,7 +16,7 @@ public class Calificacion {
 	// Getters y setters
 
 	public String getAsignatura() {
-		return asignatura;
+		return this.asignatura;
 	}
 
 	public void setAsignatura(String asignatura) {
@@ -24,7 +24,7 @@ public class Calificacion {
 	}
 
 	public String getNota() {
-		return nota;
+		return this.nota;
 	}
 
 	public void setNota(String nota) throws Exception {
