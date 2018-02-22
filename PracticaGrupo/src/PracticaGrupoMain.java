@@ -10,28 +10,28 @@ public class PracticaGrupoMain {
 		System.out.println("\n 1. Dar de alta alumno \n 2. Dar de baja alumnos \n 3. Listar los alumnos \n 4. Modificar los alumnos \n 5. Matricular los alumnos \n 6. Dar de baja de una asignatura \n 7. Introducir calificación trimestral \n 8. Listar calificaciones de alumnos \n 9. Poner una falta (dia completo) \n 10. Poner una falta (en una sesion) \n 11. Pasar lista \n 12. Listar faltas \n 13. Salir \n");
 	}
 	
+	
+	
 	public static void ordenarAlumnos(ArrayList<Alumno> alumnos, Alumno al) {
 		
 		boolean parar = false;
+		int posicion=0;
 		
 		if(alumnos.size()==0) {
-			
 			alumnos.add(al);
-			
 		}else {
 			for(int i = 0; i < alumnos.size() && parar == false; i++) {
-				
-				//if(alumnos.get(i).getApellidos().compareToIgnoreCase(al.getApellidos())<0) {
-					System.out.println(al.getApellidos()+">"+alumnos.get(i).getApellidos()+"???");
-					System.out.println(al.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos()));
-				if (al.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos())>0) {
-					System.out.println(al.getApellidos()+">"+alumnos.get(i).getApellidos()+"???");
-					System.out.println("Inserto "+al.getApellidos()+" en la posicion "+i);
-					alumnos.add(i,al);
-					
+					posicion=i;
+				if (al.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos())<0) {
 					parar = true;
 				}
 			}
+			if(parar) {
+				alumnos.add(posicion,al);
+			}else {
+				alumnos.add(posicion+1,al);
+			}
+				
 		}
 	}
 					
