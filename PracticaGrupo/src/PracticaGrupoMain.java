@@ -411,12 +411,12 @@ public class PracticaGrupoMain {
 								
 								if (alumnos.get(i).getFaltas().get(j).getDia().equals(fechaDia)) { //Si tiene ese mismo dia
 									
-									/*alumnos.get(i).getFaltas().remove(j);
+									alumnos.get(i).getFaltas().remove(j);
 									diaClaseAux = new DiaClase(fechaDia);
 									diaClaseAux.getHorario().faltaDiaEntero();
-									alumnos.get(i).getFaltas().add(diaClaseAux);*/
+									alumnos.get(i).getFaltas().add(diaClaseAux);
 									faltaAsignada=true;
-									throw new Exception ("El alumno ya tiene las faltas rellenas de este dia");
+									
 									
 								} else {//Tienes faltas pero de ese dia no
 									
