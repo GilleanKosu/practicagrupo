@@ -198,8 +198,7 @@ public class PracticaGrupoMain {
 						diaClaseAux.getHorario().faltaDiaEntero();
 						lista.get(i).getFaltas().add(diaClaseAux);
 					}
-				}
-				System.out.println();
+				}	
 			}
 		}
 	}
