@@ -175,63 +175,7 @@ public class PracticaGrupoMain {
 			throw new Exception("Sin alumnos dados de alta.");
 	}
 	
-<<<<<<< HEAD
-	//hecho por:juanra
-	//pasar lista y poner falta aquel alunmo que no este.
-	public static void pasarLista(ArrayList<Alumno> lista) throws Exception {
-		//Declaramos variables
-		Scanner entrada=new Scanner(System.in);
-		int hora;
-		int esta;
-		int dia, mes, agno;
-		int falta;
-		Fecha fechaAux;
-		DiaClase diaClaseAux;
-		
-		//Si no hay alumnos, lanzamos excepcion
-		if(lista.size()==0) {
-			throw new Exception("No hay alumnos dados de alta");
-		}
-		else {//Si hay alumnos, así que pasamos lista
-			for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
-				System.out.println("Alumno: "+lista.get(i).getNombre()+" "+lista.get(i).getApellidos());//obtendremos el alumno.
-				System.out.println("¿Esta?");
-				System.out.println("pulsa cualquier tecla para si o 0 para no");
-				esta=entrada.nextInt();
-				if(esta==0) {//si no esta pediremos el dia y la hora que ha faltado.
-					
-					//Pedir fecha
-					System.out.println("Dime el dia");
-					dia=entrada.nextInt();
-					System.out.println("Dime el mes");
-					mes=entrada.nextInt();
-					System.out.println("Dime el año");
-					agno=entrada.nextInt();
-					fechaAux = new Fecha(dia, mes, agno);
-					
-					System.out.println("Pulsa cualquier tecla para el dia entero o 0 para una hora");
-					falta=entrada.nextInt();
-					if(falta==0) {//EL ALUMNO FALTA SOLO UNA HORA
-						do {
-							System.out.println("¿que hora ha faltado?[1,6]");
-							hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
-							diaClaseAux = new DiaClase(fechaAux);
-							diaClaseAux.getHorario().faltaHora(hora);
-							lista.get(i).getFaltas().add(diaClaseAux);
-						}while(hora<1 || hora>6);
-						//HACER ALGO CON LA HORA ELEGIDA
-					}
-					else {//FALTA EL DIA ENTERO
-						diaClaseAux = new DiaClase(fechaAux);
-						diaClaseAux.getHorario().faltaDiaEntero();
-						lista.get(i).getFaltas().add(diaClaseAux);
-					}
-				}	
-			}
-		}
-	}
-=======
->>>>>>> 154abac2c32dc67c97ed2f934a6ef43dbc6d04b9
+
 	
 	
 	//Pregunta si se quiere repetir la operacion y devuelve true si el usuario ha indicado que sí,
