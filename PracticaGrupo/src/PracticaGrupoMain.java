@@ -552,7 +552,7 @@ public class PracticaGrupoMain {
 			}
 			else {//Si hay alumnos, así que pasamos lista
 				for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
-					System.out.println("Alumno: "+lista.get(i).getNombre()+" "+lista.get(i).getApellidos());//obtendremos el alumno.
+					System.out.println("Alumno: "+lista.get(i).getApellidos()+" "+lista.get(i).getNombre());//obtendremos el alumno.
 					System.out.println("¿Esta?");
 					System.out.println("pulsa cualquier tecla para si o 0 para no");
 					esta=entrada.nextInt();
@@ -568,33 +568,6 @@ public class PracticaGrupoMain {
 						fechaAux = new Fecha(dia, mes, agno);
 						
 						ponerFaltasSesion(lista, lista.get(i).getDni(), fechaAux);
-						/*do {
-							System.out.println("¿que hora ha faltado?[1,6]");
-							hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
-							falta
-							diaClaseAux = new DiaClase(fechaAux);
-							diaClaseAux.getHorario().faltaHora(hora);
-							lista.get(i).getFaltas().add(diaClaseAux);
-						}while(hora<1 || hora>6);*/
-						
-						/*
-						System.out.println("Pulsa cualquier tecla para el dia entero o 0 para una hora");
-						falta=entrada.nextInt();
-						if(falta==0) {//EL ALUMNO FALTA SOLO UNA HORA
-							do {
-								System.out.println("¿que hora ha faltado?[1,6]");
-								hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
-								diaClaseAux = new DiaClase(fechaAux);
-								diaClaseAux.getHorario().faltaHora(hora);
-								lista.get(i).getFaltas().add(diaClaseAux);
-							}while(hora<1 || hora>6);
-							//HACER ALGO CON LA HORA ELEGIDA
-						}
-						else {//FALTA EL DIA ENTERO
-							diaClaseAux = new DiaClase(fechaAux);
-							diaClaseAux.getHorario().faltaDiaEntero();
-							lista.get(i).getFaltas().add(diaClaseAux);
-						}*/
 					}
 					
 				}
@@ -610,7 +583,7 @@ public class PracticaGrupoMain {
 			else {
 				for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
 					//ArrayList<DiaClase> faltas = lista.get(i).getFaltas();//obtenemos lista faltas
-					System.out.println("alumno: "+lista.get(i).getNombre());
+					System.out.println("Alumno: "+lista.get(i).getApellidos()+" "+lista.get(i).getNombre());
 					for(int j=0; j<lista.get(i).getFaltas().size();j++) {
 						fechaAux=lista.get(i).getFaltas().get(j).getDia();
 						System.out.println("\nDia: "+fechaAux.getDia()+"/"+fechaAux.getMes()+"/"+fechaAux.getAgno());
