@@ -10,7 +10,32 @@ public class PracticaGrupoMain {
 		System.out.println("\n 1. Dar de alta alumno \n 2. Dar de baja alumnos \n 3. Listar los alumnos \n 4. Modificar los alumnos \n 5. Matricular los alumnos \n 6. Dar de baja de una asignatura \n 7. Introducir calificación trimestral \n 8. Listar calificaciones de alumnos \n 9. Poner una falta (dia completo) \n 10. Poner una falta (en una sesion) \n 11. Pasar lista \n 12. Listar faltas \n 13. Salir \n");
 	}
 	
-
+	
+	
+	public static void ordenarAlumnos(ArrayList<Alumno> alumnos, Alumno al) {
+		
+		boolean parar = false;
+		int posicion=0;
+		
+		if(alumnos.size()==0) {
+			alumnos.add(al);
+		}else {
+			for(int i = 0; i < alumnos.size() && parar == false; i++) {
+					posicion=i;
+				if (al.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos())<0) {
+					parar = true;
+				}
+			}
+			if(parar) {
+				alumnos.add(posicion,al);
+			}else {
+				alumnos.add(posicion+1,al);
+			}
+				
+		}
+	}
+					
+	
 	//Método hecho por: Daniel Moreno Navarro
 	public static void altaAlumno (ArrayList<Alumno> alumnos) throws Exception {
 		
@@ -39,10 +64,11 @@ public class PracticaGrupoMain {
 		//Comprobamos que el alumno no esté ya en el ArrayList. Si está, devolvemos la excepción
 		//y si no está, lo añadimos
 		if(alumnos.contains(nuevoAlumno)) {
-			throw new Exception ("Error. El alumno ya existe.");
+			throw new Exception ("Error. El alumno ya existe.\n");
 		}else {
-		alumnos.add(nuevoAlumno);
-		System.out.println("Alumno añadido.");
+			ordenarAlumnos(alumnos, nuevoAlumno);
+		//alumnos.add(nuevoAlumno);
+		System.out.println("Alumno añadido.\n");
 		}
 	}
 
@@ -140,6 +166,7 @@ public class PracticaGrupoMain {
 	public static void listarAlumnos(ArrayList<Alumno> alumnos) throws Exception{
 		if(alumnos.size()>0) {//En caso de que no esté vacío, recorremos el ArrayList y mostramos algunos datos
 			System.out.println("\nListado de alumnos: ");
+			System.out.println("\nHay "+alumnos.size()+"alumnos: ");
 			for(int i=0; i<alumnos.size(); i++) {
 				System.out.println(alumnos.get(i).getDni()+" "+alumnos.get(i).getApellidos()+", "+alumnos.get(i).getNombre());
 			}
@@ -148,81 +175,8 @@ public class PracticaGrupoMain {
 			throw new Exception("Sin alumnos dados de alta.");
 	}
 	
-	//hecho por:juanra
-	//pasar lista y poner falta aquel alunmo que no este.
-	public static void pasarLista(ArrayList<Alumno> lista) throws Exception {
-		//Declaramos variables
-		Scanner entrada=new Scanner(System.in);
-		int hora;
-		int esta;
-		int dia, mes, agno;
-		int falta;
-		Fecha fechaAux;
-		DiaClase diaClaseAux;
-		
-		//Si no hay alumnos, lanzamos excepcion
-		if(lista.size()==0) {
-			throw new Exception("No hay alumnos dados de alta");
-		}
-		else {//Si hay alumnos, así que pasamos lista
-			for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
-				System.out.println("Alumno: "+lista.get(i).getNombre()+" "+lista.get(i).getApellidos());//obtendremos el alumno.
-				System.out.println("¿Esta?");
-				System.out.println("pulsa cualquier tecla para si o 0 para no");
-				esta=entrada.nextInt();
-				if(esta==0) {//si no esta pediremos el dia y la hora que ha faltado.
-					
-					//Pedir fecha
-					System.out.println("Dime el dia");
-					dia=entrada.nextInt();
-					System.out.println("Dime el mes");
-					mes=entrada.nextInt();
-					System.out.println("Dime el año");
-					agno=entrada.nextInt();
-					fechaAux = new Fecha(dia, mes, agno);
-					
-					System.out.println("Pulsa cualquier tecla para el dia entero o 0 para una hora");
-					falta=entrada.nextInt();
-					if(falta==0) {//EL ALUMNO FALTA SOLO UNA HORA
-						do {
-							System.out.println("¿que hora ha faltado?[1,6]");
-							hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
-							diaClaseAux = new DiaClase(fechaAux);
-							diaClaseAux.getHorario().faltaHora(hora);
-							lista.get(i).getFaltas().add(diaClaseAux);
-						}while(hora<1 || hora>6);
-						//HACER ALGO CON LA HORA ELEGIDA
-					}
-					else {//FALTA EL DIA ENTERO
-						diaClaseAux = new DiaClase(fechaAux);
-						diaClaseAux.getHorario().faltaDiaEntero();
-						lista.get(i).getFaltas().add(diaClaseAux);
-					}
-				}
-				System.out.println();
-			}
-		}
-	}
-	
-	//hecho por:juanra.
-	public static void listarFaltas(ArrayList<Alumno> lista) throws Exception{
-		Fecha fechaAux;
-		if(lista.size()==0) {
-			throw new Exception("No hay alumnos dados de alta");
-		}
-		else {
-			for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
-				//ArrayList<DiaClase> faltas = lista.get(i).getFaltas();//obtenemos lista faltas
-				System.out.println("alumno: "+lista.get(i).getNombre());
-				for(int j=0; j<lista.get(i).getFaltas().size();j++) {
-					fechaAux=lista.get(i).getFaltas().get(j).getDia();
-					System.out.println("Dia: "+fechaAux.getDia()+"/"+fechaAux.getMes()+"/"+fechaAux.getAgno());
-					lista.get(i).getFaltas().get(j).getHorario().imprimeHora();
-				}
-			}
-		}
 
-	}
+	
 	
 	//Pregunta si se quiere repetir la operacion y devuelve true si el usuario ha indicado que sí,
 	//false en caso contrario
@@ -417,6 +371,10 @@ public class PracticaGrupoMain {
 			
 		}
 		
+<<<<<<< HEAD
+=======
+		posicionAlumno=alumnos.indexOf(dniAlumno);
+>>>>>>> a9f0aae8189146eb0f51570d18f7d06284c8c5c9
 		
 	}
 	
@@ -427,6 +385,9 @@ public class PracticaGrupoMain {
 		//Variables
 		String dni;
 		int dia, mes, agno;
+		boolean faltaAsignada=false;
+		DiaClase diaClaseAux;
+		Fecha fechaDia;
 		
 		//Entradas
 		Scanner entrada = new Scanner (System.in);
@@ -434,32 +395,60 @@ public class PracticaGrupoMain {
 		System.out.println("Dni");
 		dni=entrada.nextLine();
 		
-		System.out.println("dia");
-		dia=entrada.nextInt();
-		
-		System.out.println("mes");
-		mes=entrada.nextInt();
-		
-		System.out.println("año");
-		agno=entrada.nextInt();
-		
-		Fecha fechaDia = new Fecha (dia, mes, agno);//Creacion del objeto con los datos introducidos
 		
 		//Preguntamos si existe el alumno
-		if (alumnos.contains(new Alumno(dni))) {
+		if (alumnos.contains(new Alumno(dni))) {//Si existe pedimos los datos de la fecha para poner la falta
+			
+			System.out.println("dia");
+			dia=entrada.nextInt();
+			
+			System.out.println("mes");
+			mes=entrada.nextInt();
+			
+			System.out.println("año");
+			agno=entrada.nextInt();
+			
+			fechaDia = new Fecha (dia, mes, agno);//Creacion del objeto con los datos introducidos
 			
 			//Recorremos el Araylist de Alumno
-			for (int i = 0; i < alumnos.size(); i++) {
+			for (int i = 0; i < alumnos.size() && faltaAsignada==false; i++) {
 				
-				//Recorremos el ArrayList de las faltas
-				for (int j = 0; j < alumnos.get(i).getFaltas().size(); j++) {
+				if(alumnos.get(i).getDni().equals(dni)) {
 					
-					//Preguntamos que dia coindice con el intoducido
-					if (alumnos.get(i).getFaltas().get(j).getDia() == fechaDia) {
+					//Primero vemos si el alumno tiene alguna falta o no
+					if(alumnos.get(i).getFaltas().size()==0) {
+						diaClaseAux = new DiaClase(fechaDia);
+						diaClaseAux.getHorario().faltaDiaEntero();
+						alumnos.get(i).getFaltas().add(diaClaseAux);
+						faltaAsignada=true;
 						
-						alumnos.get(i).getFaltas().get(j).getHorario().faltaDiaEntero(); //Le ponemos las faltas de ese dia
+					} else {//Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
+						
+							for (int j = 0; j <alumnos.get(i).getFaltas().size(); j ++) {
+								
+								if (alumnos.get(i).getFaltas().get(j).getDia().equals(fechaDia)) { //Si tiene ese mismo dia
+									
+									alumnos.get(i).getFaltas().remove(j);
+									diaClaseAux = new DiaClase(fechaDia);
+									diaClaseAux.getHorario().faltaDiaEntero();
+									alumnos.get(i).getFaltas().add(diaClaseAux);
+									faltaAsignada=true;
+									
+									
+								} else {//Tienes faltas pero de ese dia no
+									
+									diaClaseAux = new DiaClase(fechaDia);
+									diaClaseAux.getHorario().faltaDiaEntero();
+									alumnos.get(i).getFaltas().add(diaClaseAux);
+									faltaAsignada=true;
+									
+								}
+									
+							}
+						
 						
 					}
+
 				}
 				
 			}
@@ -467,79 +456,186 @@ public class PracticaGrupoMain {
 		} else {
 			throw new Exception ("No existe el alumno");
 		}
-
+		
 	}
 	
 	
 	//Autor: Antonio Garcia
 	//10. Poner la falta de la hora en concreto
-	public static void ponerFaltasSesion(ArrayList <Alumno> alumnos) throws Exception {
+	public static void ponerFaltasSesion(ArrayList <Alumno> alumnos, String dni, Fecha fechaDia) throws Exception {
 		
 		//Variables
-		
-		String dni;
-		int dia, mes, agno, horaFalta;
-		Fecha fechaDia;
-		char [] sesiones;
-		
-		//Entradas
-		Scanner entrada = new Scanner (System.in);
-		
-		System.out.println("Dni");
-		dni=entrada.nextLine();
-		
-		System.out.println("dia");
-		dia=entrada.nextInt();
-		
-		System.out.println("mes");
-		mes=entrada.nextInt();
-		
-		System.out.println("año");
-		agno=entrada.nextInt();
-		
-		System.out.println("Hora de la falta");
-		horaFalta=entrada.nextInt();
-		
-		
-		fechaDia = new Fecha (dia, mes, agno);//Creacion del objeto con los datos introducidos
-		
-		//Preguntamos si existe el alumno
-		if (alumnos.contains(new Alumno(dni))) {
-			
-			//Recorremos el Araylist de Alumno
-			for (int i = 0; i < alumnos.size(); i++) {
+				DiaClase diaClaseAux;
+				int horaFalta=0, posicionFaltas = 0;
+				char [] sesiones;
+				boolean faltaAsignada=false, encontrado=false;
 				
-				//Recorremos el ArrayList de las faltas
-				for (int j = 0; j < alumnos.get(i).getFaltas().size(); j++) {
-					
-					sesiones = alumnos.get(i).getFaltas().get(j).getHorario().getSesiones();
-					
-					if (sesiones [horaFalta] != ' ') {//Si el almno tiene una falta genera una excepcion
-						
-						throw new Exception ("El alumno ya tiene falta a esa hora");
-						
-					} else { //Si no la tiene introducimos a esa hora la falta
-						
-						//Preguntamos que dia coindice con el intoducido
-						if (alumnos.get(i).getFaltas().get(j).getDia() == fechaDia) {
-							
-							alumnos.get(i).getFaltas().get(j).getHorario().faltaHora(horaFalta);//Le ponemos las faltas de esa hora
-							
-						}
-						
+				//Entradas
+				Scanner entrada = new Scanner (System.in);
+				
+				//Comprobamos que la hora introducida esta entre 1 y 6
+				
+				while(horaFalta<1||horaFalta>6) {
+					System.out.println("Hora de la falta");
+					horaFalta=entrada.nextInt();
+					if(horaFalta<1||horaFalta>6) {
+						throw new Exception ("Debe ser una hora en [1,6]");
 					}
 						
+				}	
+
+				
+				//Preguntamos si existe el alumno
+				if (alumnos.contains(new Alumno(dni))) {
 					
+					//Recorremos el Araylist de Alumno
+					for (int i = 0; (i < alumnos.size()) && (faltaAsignada==false); i++) {
+						if(alumnos.get(i).getDni().equals(dni)) {
+							
+							//Añadimos a faltas lo que contenga el arraylist list de falta de ese alumno
+							ArrayList<DiaClase> faltas=alumnos.get(i).getFaltas();
+							
+							if(faltas.size()==0) {//Comprobamos si el arraylist esta vacio
+								
+								diaClaseAux = new DiaClase(fechaDia);
+								diaClaseAux.getHorario().faltaHora(horaFalta);
+								alumnos.get(i).getFaltas().add(diaClaseAux);
+								faltaAsignada=true;
+								
+							} else {//El alumno ya tiene faltas
+								
+								//Buscamos en su arraylist faltas si tiene alguna el mismo dia y cambiamos el valor de la variable
+								
+								for(int j=0; j<faltas.size();j++) {
+									
+									if(alumnos.get(i).getFaltas().get(j).getDia().equals(fechaDia)==true) {//Si la tiene en el mismo dia
+										
+										posicionFaltas=j;
+										encontrado=true;
+										
+									}
+											
+								}
+								
+								if(encontrado==true) {//Si la tiene en el mismo dia
+									
+									if (alumnos.get(i).getFaltas().get(posicionFaltas).getHorario().getSesiones()[horaFalta-1] == 'F') {//Si la tiene la misma hora que la especificada
+										
+										throw new Exception ("El alumno ya tiene falta en esa sesion");
+										
+									} else {//Si no la tiene en esa hora
+										
+										alumnos.get(i).getFaltas().get(posicionFaltas).getHorario().faltaHora(horaFalta);
+										faltaAsignada=true;
+										
+									}
+									
+									
+								} else {//Si no la tiene el mismo dia añadimos la falta y el dia
+									
+									diaClaseAux = new DiaClase(fechaDia);
+									diaClaseAux.getHorario().faltaHora(horaFalta);
+									alumnos.get(i).getFaltas().add(diaClaseAux);
+									faltaAsignada=true;
+								}
+							}
+								
+						}
+					}
+						
+				} else {
 					
+					throw new Exception ("No existe el alumno");
 					
 				}
-				
-			}
-			
-		} else {
-			throw new Exception ("No existe el alumno");
-		}
 	}
+	
+	//hecho por:juanra
+		//pasar lista y poner falta aquel alunmo que no este.
+		public static void pasarLista(ArrayList<Alumno> lista) throws Exception {
+			//Declaramos variables
+			Scanner entrada=new Scanner(System.in);
+			int hora;
+			int esta;
+			int dia, mes, agno;
+			int falta;
+			Fecha fechaAux;
+			DiaClase diaClaseAux;
+			
+			//Si no hay alumnos, lanzamos excepcion
+			if(lista.size()==0) {
+				throw new Exception("No hay alumnos dados de alta");
+			}
+			else {//Si hay alumnos, así que pasamos lista
+				for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
+					System.out.println("Alumno: "+lista.get(i).getNombre()+" "+lista.get(i).getApellidos());//obtendremos el alumno.
+					System.out.println("¿Esta?");
+					System.out.println("pulsa cualquier tecla para si o 0 para no");
+					esta=entrada.nextInt();
+					if(esta==0) {//si no esta pediremos el dia y la hora que ha faltado.
+						
+						//Pedir fecha
+						System.out.println("Dime el dia");
+						dia=entrada.nextInt();
+						System.out.println("Dime el mes");
+						mes=entrada.nextInt();
+						System.out.println("Dime el año");
+						agno=entrada.nextInt();
+						fechaAux = new Fecha(dia, mes, agno);
+						
+						ponerFaltasSesion(lista, lista.get(i).getDni(), fechaAux);
+						/*do {
+							System.out.println("¿que hora ha faltado?[1,6]");
+							hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
+							falta
+							diaClaseAux = new DiaClase(fechaAux);
+							diaClaseAux.getHorario().faltaHora(hora);
+							lista.get(i).getFaltas().add(diaClaseAux);
+						}while(hora<1 || hora>6);*/
+						
+						/*
+						System.out.println("Pulsa cualquier tecla para el dia entero o 0 para una hora");
+						falta=entrada.nextInt();
+						if(falta==0) {//EL ALUMNO FALTA SOLO UNA HORA
+							do {
+								System.out.println("¿que hora ha faltado?[1,6]");
+								hora=entrada.nextInt();//introduce hora que ha faltado y la asigna.
+								diaClaseAux = new DiaClase(fechaAux);
+								diaClaseAux.getHorario().faltaHora(hora);
+								lista.get(i).getFaltas().add(diaClaseAux);
+							}while(hora<1 || hora>6);
+							//HACER ALGO CON LA HORA ELEGIDA
+						}
+						else {//FALTA EL DIA ENTERO
+							diaClaseAux = new DiaClase(fechaAux);
+							diaClaseAux.getHorario().faltaDiaEntero();
+							lista.get(i).getFaltas().add(diaClaseAux);
+						}*/
+					}
+					
+				}
+			}
+		}
+		
+		//hecho por:juanra.
+		public static void listarFaltas(ArrayList<Alumno> lista) throws Exception{
+			Fecha fechaAux;
+			if(lista.size()==0) {
+				throw new Exception("No hay alumnos dados de alta");
+			}
+			else {
+				for (int i = 0; i < lista.size(); i++) {//recorrerá lista de alumnos.
+					//ArrayList<DiaClase> faltas = lista.get(i).getFaltas();//obtenemos lista faltas
+					System.out.println("alumno: "+lista.get(i).getNombre());
+					for(int j=0; j<lista.get(i).getFaltas().size();j++) {
+						fechaAux=lista.get(i).getFaltas().get(j).getDia();
+						System.out.println("\nDia: "+fechaAux.getDia()+"/"+fechaAux.getMes()+"/"+fechaAux.getAgno());
+						lista.get(i).getFaltas().get(j).getHorario().imprimeHora();
+					}
+				}
+			}
+
+		}
 
 	
 	public static void main(String[] args) {
@@ -569,95 +665,44 @@ public class PracticaGrupoMain {
 			
 			switch (opcionMenu) {
 			
+				//Método dar de alta alumno (Daniel Moreno)
 				case 1:
 					
-					Scanner entrada1 = new Scanner(System.in);
-					
+					//Variables
 					boolean repetir1 = true;
 					int opcion1;
 					
-					do {
-						
-						try {			
+					//Bucle para repetir la opción de dar de alta si se desea
+					while(repetir1 == true) {
+						try {
 							PracticaGrupoMain.altaAlumno(alumnos);
-						} catch (Exception ex) {
-						System.out.println(ex.getMessage());
-						}System.out.println();
-						
-						System.out.println("¿Añadir nuevo alumno?");
-						System.out.println("1. Sí - 2. No");
-						opcion1 = entrada1.nextInt();
-						
-						switch(opcion1) {
-						
-						case 1:
-							
-							System.out.println();
-							
-							break;
-							
-						case 2:
-							
-							System.out.println("Fin de la operación.");
-							System.out.println();
-							repetir1 = false;
-							
-							break;
-							
-						default:
-							
-							System.out.println("Opción incorrecta.");
-							repetir1 = false;
-							
+						}catch(Exception ex) {
+							System.out.println(ex.getMessage());
 						}
-					}while(repetir1 == true);
+						repetir1 = repetimos();
+					}
 					
 					break;
-					
+				
+					//Método dar de baja alumno (Daniel Moreno)
 				case 2:
 					
-					Scanner entrada2 = new Scanner(System.in);
-					
+					//Variables
 					boolean repetir2 = true;
 					int opcion2;
 					
-					do {
-						
-						try {			
-								PracticaGrupoMain.bajaAlumno(alumnos);
+					//Bucle para repetir la opción de dar de alta si se desea
+					while(repetir2 == true) {
+					
+						try {
+							PracticaGrupoMain.bajaAlumno(alumnos);
 											
 						} catch (Exception ex) {
 							System.out.println(ex.getMessage());
-						}System.out.println();
-						
-						System.out.println("¿Dar de baja otro alumno?");
-						System.out.println("1. Sí - 2. No");
-						opcion1 = entrada2.nextInt();
-						
-						switch(opcion1) {
-							
-							case 1:
-								
-								System.out.println();
-								
-								break;
-								
-							case 2:
-								
-								System.out.println("Fin de la operación.");
-								System.out.println();
-								repetir1 = false;
-								
-								break;
-								
-							default:
-								
-								System.out.println("Opción incorrecta.");
-								repetir1 = false;
-								
-							}
-					}while(repetir2 == true);
-								
+						}
+						repetir2 = repetimos();
+					}
+					
 					break;
 		
 		//Listar los alumnos		
@@ -711,6 +756,7 @@ public class PracticaGrupoMain {
 					
 					break;
 					
+				//Metodo para poner la falta en un dia completo
 				case 9:
 					try {
 						
@@ -718,32 +764,64 @@ public class PracticaGrupoMain {
 						
 					} catch (Exception ex) {
 
-						ex.getMessage();
+						System.out.print(ex.getMessage());
 						
 					}
-					
-				
-					//listarFaltas(alumnos);
-				
-					
+								
 					break;
-					
+				
+				//Metodo para poner una falta en una sesion
 				case 10:
 					
-					try {
+					String dni;
+					int dia, mes, agno;
+					Fecha fecha=null;
+					Alumno alum;
+					Scanner entrada = new Scanner (System.in);
+					
+					System.out.println("Dni");
+					dni=entrada.nextLine();
+					
+					alum = new Alumno (dni);
+					
+					if (alumnos.contains(alum)) {
 						
-						ponerFaltasSesion (alumnos);
+						System.out.println("dia");
+						dia=entrada.nextInt();
 						
-					} catch (Exception ex) {
-
-						ex.getMessage();
+						System.out.println("mes");
+						mes=entrada.nextInt();
+						
+						System.out.println("año");
+						agno=entrada.nextInt();
+						
+					
+						try {
+							fecha = new Fecha (dia, mes, agno);
+						} catch (Exception ex) {
+							
+							System.out.println(ex.getMessage());
+						}
+						
+							try {
+								
+								ponerFaltasSesion (alumnos,dni,fecha);
+								
+							} catch (Exception ex) {
+		
+								System.out.println(ex.getMessage());
+								
+							}
+							
+					} else {
+						
+						System.out.println("No existe ese alumno");
 						
 					}
 					
-					//listarFaltas(alumnos);
-					
 					break;
-					//pasar lista.
+					
+				//Metodo pasar lista.
 				case 11:
 					// Llamamos al metodo
 					

@@ -80,8 +80,9 @@ public class Alumno {
 
 		if(object instanceof Alumno){
 			Alumno alumno = (Alumno) object;
-			if(alumno.getDni().equalsIgnoreCase(this.getDni()))
+			if(alumno.getDni().equalsIgnoreCase(this.getDni())) {
 				igual = true;
+			}
 		}
 		return igual; 
 	}

@@ -42,12 +42,13 @@ public class DiaClase {
 		boolean igual = false;
 		
 		if(object instanceof DiaClase){
+			
 			DiaClase diaClase = (DiaClase) object;
 			
-		if(diaClase.getDia().equals(this.getDia()))
+			if(diaClase.getDia().equals(this.getDia())) {
+				igual = true;
+			}
 			
-			igual = true;
-		
 		}
 		
 		return igual;
