@@ -16,7 +16,7 @@ public class Calificacion {
 	// Getters y setters
 
 	public String getAsignatura() {
-		return this.asignatura;
+		return asignatura;
 	}
 
 	public void setAsignatura(String asignatura) {
@@ -24,12 +24,14 @@ public class Calificacion {
 	}
 
 	public String getNota() {
-		return this.nota;
+		return nota;
 	}
 
 	public void setNota(String nota) throws Exception {
-		if (nota != "0" || nota != "1" || nota != "2" || nota != "3" || nota != "4" || nota != "5" || nota != "6"
-				|| nota != "7" || nota != "8" || nota != "9" || nota != "10" || nota != "NE")
+
+		if (!nota.equals("0") && !nota.equals("1") && !nota.equals("2") && !nota.equals("3") && !nota.equals("4")
+				&& !nota.equals("5") && !nota.equals("6") && !nota.equals("7") && !nota.equals("8") && !nota.equals("9")
+				&& !nota.equals("10") && !nota.equals("NE"))
 			throw new Exception("Error: valor no admitido.");
 
 		this.nota = nota;
