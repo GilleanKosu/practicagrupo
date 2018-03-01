@@ -371,10 +371,6 @@ public class PracticaGrupoMain {
 			
 		}
 		
-<<<<<<< HEAD
-=======
-		posicionAlumno=alumnos.indexOf(dniAlumno);
->>>>>>> a9f0aae8189146eb0f51570d18f7d06284c8c5c9
 		
 	}
 	
