@@ -322,23 +322,16 @@ public class PracticaGrupoMain {
 					if (opcion < 0 || opcion > 5)
 						System.out.println("Debe elegir un valor en [0,5]. Pruebe otra vez");
 				} while (opcion < 0 || opcion > 5);
-
-				// Si ya está matriculado de esa asignatura, lanzamos excepción
-				for (int i = 0; i < alumnos.size(); i++) {
-					if (alumnos.get(i).getDni().equals(dni))// selecciono el alumno
-						notas = alumnos.get(i).getNotas();// tengo las notas, ahora he de mirar si la asignatura ya está
-															// entre las del alumno
-					for (int j = 0; j < notas.size(); j++) {
-						if (notas.get(j).getAsignatura().equals(asignaturas[i]))
-							throw new Exception("Ya matriculado");
-						else {
-							calificacionAux = new Calificacion(asignaturas[i]);
-							calificacionAux.setNota("NE");
-							alumnos.get(i).getNotas().add(calificacionAux);
-						}
-					}
+							
+				//Si ya está matriculado de esa asignatura, lanzo excepción, si no, lo matriculo
+				if( alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().contains(asignaturas[opcion]) ) {
+					throw new Exception("Ya matriculado");
 				}
-
+				//lo matriculo
+				calificacionAux = new Calificacion(asignaturas[opcion]);
+				calificacionAux.setNota("NE");
+				alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().add(calificacionAux);
+//				alumnos.get(i).getNotas().add(calificacionAux);
 			}
 		}
 	}
