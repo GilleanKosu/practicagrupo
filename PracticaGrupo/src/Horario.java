@@ -48,6 +48,7 @@ public class Horario {
 			System.out.print(sesiones[i]+"/");
 			
 		}
+		System.out.print("\n");
 	}
 	
 	
