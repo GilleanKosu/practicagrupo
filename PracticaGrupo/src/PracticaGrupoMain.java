@@ -392,20 +392,32 @@ public class PracticaGrupoMain {
 		
 		Scanner entrada = new Scanner (System.in);
 		
-		System.out.println("Introduzca el dni del alumno");
-		dniAlumno=entrada.nextLine();
-		
-		
-		if (alumnos.contains(dniAlumno) == false) {
-			System.out.println("El alumno introducido no existe en este centro");
-		}
-		
-		posicionAlumno=alumnos.lastIndexOf(dniAlumno);
-		
-		for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++)  {
+		if (alumnos.size()==0) {
+			throw new Exception ("No hay alumnos de los que mostrar las calificaciones");
+		} else {
 			
-			System.out.println(alumnos.get(posicionAlumno).getNotas().get(i).getNota());
+			System.out.println("Introduzca el dni del alumno");
+			dniAlumno=entrada.nextLine();
+			
+			
+			if (alumnos.contains(dniAlumno) == false) {
+				System.out.println("El alumno introducido no existe en este centro");
+			} else {
+				
+				posicionAlumno=alumnos.lastIndexOf(dniAlumno);
+				
+				for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++)  {
+					
+					System.out.println(alumnos.get(posicionAlumno).getNotas().get(i).getNota());
+				}
+				
+			}
+			
+			
+			
 		}
+		
+		
 	}
 	
 	//Autor: Antonio Garcia
