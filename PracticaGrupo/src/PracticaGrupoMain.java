@@ -155,22 +155,21 @@ public class PracticaGrupoMain {
 			return false;
 		}
 	}
-	// Autor: Antonio Garcia
-	// Compara si existe un elemento de tipo Alumno en el arraylist introducido
-	public static int existeAlumno (ArrayList<Alumno> arrayAlumnos, String dni) {
-		int posicion = -1;
-		boolean comprobador=false;
-		
+
+	
+	//Autor: Puri Amoros (Antonio solo ha modificado el mensaje del DNI)
+	//Comprobar si existe el alumno
+	public static int existeAlumno (ArrayList<Alumno> arrayAlumnos) {
+			
 		Scanner entrada = new Scanner(System.in);
 		
+		System.out.println("Introduzca el dni:");
+		String dni = entrada.nextLine();
 		
-		for (int i=0; i<arrayAlumnos.size(); i++) {
-			
-			if (arrayAlumnos.get(i).getDni().equals(dni) && comprobador==false) {
-				posicion=i;
-				comprobador=true;
-			}
-		}
+		Alumno aBuscar = new Alumno(dni);
+		
+		int posicion = arrayAlumnos.indexOf(aBuscar);
+		
 		return posicion;
 		
 	}
