@@ -320,7 +320,6 @@ public class PracticaGrupoMain {
 		//Si no hay alumnos, no podemos hacer nada... lanzamos excepcion
 		if (alumnos.size() == 0)
 			throw new Exception("Error!. Aun no hay alumnos en el listado");
-<<<<<<< HEAD
 		
 		//Si llegamos aquí, si hay alumnos, así que pedimos el dni a modificar
 		posicion=existeAlumno(alumnos);
@@ -328,42 +327,11 @@ public class PracticaGrupoMain {
 		if(posicion==-1)
 			throw new Exception("Error!. No existe el alumno indicado.");
 		
+		//Si está el alumno, procedemos
 		do {
 			System.out.println("¿De qué asignatura se va a matricular?");
 			for (int i = 0; i < asignaturas.length; i++) {
 				System.out.println((i) + " " + asignaturas[i]);
-=======
-		else {
-			// Pide cuál se quiere matricular
-			System.out.println("Introd. el dni del alumno a matricular: ");
-			dni = entrada.nextLine();
-
-			if (!alumnos.contains(new Alumno(dni))) {// El alumno no está en el conjunto
-				throw new Exception("Error!. No existe el alumno " + dni);
-			} else {// El alumno sí está, pedimos la asignatura en que lo vamos a matricular
-				do {
-					System.out.println("¿De qué asignatura se va a matricular?");
-					for (int i = 0; i < asignaturas.length; i++) {
-						System.out.println((i) + " " + asignaturas[i]);
-					}
-					opcion = entrada.nextInt();
-					entrada.nextLine();// Limpiar buffer
-
-					if (opcion < 0 || opcion > 5)
-						System.out.println("Debe elegir un valor en [0,5]. Pruebe otra vez");
-				} while (opcion < 0 || opcion > 5);
-
-				// Si ya está matriculado de esa asignatura, lanzo excepción, si no, lo
-				// matriculo
-				if (alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().contains(asignaturas[opcion])) {
-					throw new Exception("Ya matriculado");
-				}
-				// lo matriculo
-				calificacionAux = new Calificacion(asignaturas[opcion]);
-				calificacionAux.setNota("NE");
-				alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().add(calificacionAux);
-				// alumnos.get(i).getNotas().add(calificacionAux);
->>>>>>> 5cf662fc5a093dfc425abe6b8649dbdbcea880df
 			}
 			opcion = entrada.nextInt();
 			entrada.nextLine();// Limpiar buffer
@@ -384,7 +352,8 @@ public class PracticaGrupoMain {
 
 	// Dar de baja - Danut Nelu Moldovan
 	public static void darDeBaja(ArrayList<Alumno> alumnos) throws Exception {
-		// s
+		
+		// Entradas
 		Scanner teclado = new Scanner(System.in);
 
 		// Se declaran variables
@@ -703,7 +672,7 @@ public class PracticaGrupoMain {
 																												// el
 																												// alumno.
 				System.out.println("¿Esta?");
-				System.out.println("pulsa cualquier tecla para si o 0 para no");
+				System.out.println("pulsa cualquier numero para SI o 0 para NO");
 				esta = entrada.nextInt();
 				if (esta == 0) {// si no esta pediremos el dia y la hora que ha faltado.
 
