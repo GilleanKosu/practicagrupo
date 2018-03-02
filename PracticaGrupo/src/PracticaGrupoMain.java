@@ -927,7 +927,7 @@ public class PracticaGrupoMain {
 
 				controlaMenu = true;
 				
-				System.out.println("Programa cerrado");
+				System.out.println("Programa cerrado.");
 
 				break;
 
