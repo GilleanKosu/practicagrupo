@@ -156,22 +156,21 @@ public class PracticaGrupoMain {
 		}
 	}
 
-	
-	//Autor: Puri Amoros (Antonio solo ha modificado el mensaje del DNI)
-	//Comprobar si existe el alumno
-	public static int existeAlumno (ArrayList<Alumno> arrayAlumnos) {
-			
+	// Autor: Puri Amoros (Antonio solo ha modificado el mensaje del DNI)
+	// Comprobar si existe el alumno
+	public static int existeAlumno(ArrayList<Alumno> arrayAlumnos) {
+
 		Scanner entrada = new Scanner(System.in);
-		
+
 		System.out.println("Introduzca el dni:");
 		String dni = entrada.nextLine();
-		
+
 		Alumno aBuscar = new Alumno(dni);
-		
+
 		int posicion = arrayAlumnos.indexOf(aBuscar);
-		
+
 		return posicion;
-		
+
 	}
 
 	// Autor listarAlumnos: Daniel Garrido Castro
@@ -321,6 +320,7 @@ public class PracticaGrupoMain {
 		//Si no hay alumnos, no podemos hacer nada... lanzamos excepcion
 		if (alumnos.size() == 0)
 			throw new Exception("Error!. Aun no hay alumnos en el listado");
+<<<<<<< HEAD
 		
 		//Si llegamos aquí, si hay alumnos, así que pedimos el dni a modificar
 		posicion=existeAlumno(alumnos);
@@ -332,6 +332,38 @@ public class PracticaGrupoMain {
 			System.out.println("¿De qué asignatura se va a matricular?");
 			for (int i = 0; i < asignaturas.length; i++) {
 				System.out.println((i) + " " + asignaturas[i]);
+=======
+		else {
+			// Pide cuál se quiere matricular
+			System.out.println("Introd. el dni del alumno a matricular: ");
+			dni = entrada.nextLine();
+
+			if (!alumnos.contains(new Alumno(dni))) {// El alumno no está en el conjunto
+				throw new Exception("Error!. No existe el alumno " + dni);
+			} else {// El alumno sí está, pedimos la asignatura en que lo vamos a matricular
+				do {
+					System.out.println("¿De qué asignatura se va a matricular?");
+					for (int i = 0; i < asignaturas.length; i++) {
+						System.out.println((i) + " " + asignaturas[i]);
+					}
+					opcion = entrada.nextInt();
+					entrada.nextLine();// Limpiar buffer
+
+					if (opcion < 0 || opcion > 5)
+						System.out.println("Debe elegir un valor en [0,5]. Pruebe otra vez");
+				} while (opcion < 0 || opcion > 5);
+
+				// Si ya está matriculado de esa asignatura, lanzo excepción, si no, lo
+				// matriculo
+				if (alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().contains(asignaturas[opcion])) {
+					throw new Exception("Ya matriculado");
+				}
+				// lo matriculo
+				calificacionAux = new Calificacion(asignaturas[opcion]);
+				calificacionAux.setNota("NE");
+				alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().add(calificacionAux);
+				// alumnos.get(i).getNotas().add(calificacionAux);
+>>>>>>> 5cf662fc5a093dfc425abe6b8649dbdbcea880df
 			}
 			opcion = entrada.nextInt();
 			entrada.nextLine();// Limpiar buffer
@@ -352,23 +384,16 @@ public class PracticaGrupoMain {
 
 	// Dar de baja - Danut Nelu Moldovan
 	public static void darDeBaja(ArrayList<Alumno> alumnos) throws Exception {
+		// s
 		Scanner teclado = new Scanner(System.in);
-		System.out.println("Introduzca el DNI del alumno.");// Se pide el DNI del alumno
-		String dni = teclado.nextLine();
+
 		// Se declaran variables
-		int posicion = 0;
+		int posicion = existeAlumno(alumnos);
 		boolean matriculado = false;
-		boolean existe = false;
-		// Se comprueba si el alumno está en el arraylist
-		for (int i = 0; i < alumnos.size(); i++) {
-			if (alumnos.get(i).getDni().equals(dni)) {
-				existe = true;
-				posicion = i;
-			}
-		}
+
 		// Se imprimen las asignaturas en las que está matriculado si el alumno existe y
 		// está matriculado en alguna asignatura
-		if (existe == true && alumnos.get(posicion).getNotas().size() != 0) {
+		if (posicion != -1 && alumnos.get(posicion).getNotas().size() != 0) {
 			System.out.println("Asignaturas en las que está matriculado el alumno:");
 			for (int i = 0; i < alumnos.get(posicion).getNotas().size(); i++) {
 				System.out.println(alumnos.get(posicion).getNotas().get(i).getAsignatura());
@@ -389,7 +414,7 @@ public class PracticaGrupoMain {
 				System.out.println("El alumno no estaba matriculado en " + asignatura + ".");
 			}
 		} else {
-			if (existe == false) {
+			if (posicion == -1) {
 				throw new Exception("Alumno no encontrado.");
 			} else {
 				if (alumnos.get(posicion).getNotas().size() == 0) {
@@ -403,19 +428,9 @@ public class PracticaGrupoMain {
 	// Calificacion trimestral - Danut Nelu Moldovan
 	public static void ponerCalificacion(ArrayList<Alumno> alumnos) throws Exception {
 		Scanner teclado = new Scanner(System.in);
-		// Se pide el DNI del alumno
-		System.out.println("Introduzca el DNI del alumno.");
-		String dni = teclado.nextLine();
-		// Se comprueba si existe el alumno y se guarda su posición
-		int posicion = 0;
-		boolean existe = false;
-		for (int i = 0; i < alumnos.size(); i++) {
-			if (alumnos.get(i).getDni().equals(dni)) {
-				existe = true;
-				posicion = i;
-			}
-		}
-		if (existe == true) {
+		int posicion = existeAlumno(alumnos);
+		// Se comprueba si el alumno existe
+		if (posicion != -1) {
 			// Se compueba si el alumno está matriculado en alguna asignatura.
 			if (alumnos.get(posicion).getNotas().size() != 0) {
 				// Se recorre arraylist de que contiene las notas del alumno y pedimos la nota
@@ -444,53 +459,51 @@ public class PracticaGrupoMain {
 		} else {
 			throw new Exception("Alumno no encontrado");
 		}
-		
+
 	}
 
 	// Autor: Antonio Garcia
 	// 8. Mostrar las calificaciones
 
 	public static void muestraCalificaciones(ArrayList<Alumno> alumnos) throws Exception {
-		
-		//Variables
+
+		// Variables
 		String dniAlumno;
 		int posicionAlumno;
-		
-		//Entradas
+
+		// Entradas
 		Scanner entrada = new Scanner(System.in);
-		
-		//Procesos
-		
-		if (alumnos.size() == 0) {//Comprobamos si el array esta vacio
-			
+
+		// Procesos
+
+		if (alumnos.size() == 0) {// Comprobamos si el array esta vacio
+
 			throw new Exception("No hay alumnos de los que mostrar las calificaciones");
-			
-		} else {//Si no esta vacio preguntaremos el dni del alumno para mostrar sus datos
-			
+
+		} else {// Si no esta vacio preguntaremos el dni del alumno para mostrar sus datos
+
 			posicionAlumno = existeAlumno(alumnos);
 
-			if (posicionAlumno == -1) {//Si el alumno no esta devolvera -1 y lanzara la excepcion
-				
+			if (posicionAlumno == -1) {// Si el alumno no esta devolvera -1 y lanzara la excepcion
+
 				throw new Exception("El alumno introducido no existe en este centro");
-				
-			} else {//Como el alumno está sacamos la posicion en la que se encuentra
-				
-				
-				if (alumnos.get(posicionAlumno).getNotas().size()==0) {//Si al alumno no se le ha asignado ninguna calificacion sacará una Excepcion
-					
-					throw new Exception ("El alumno no tiene calificaciones asignadas");
-					
-				} else {//Si tiene faltas pasamos a mostrarlas
-					
+
+			} else {// Como el alumno está sacamos la posicion en la que se encuentra
+
+				if (alumnos.get(posicionAlumno).getNotas().size() == 0) {// Si al alumno no se le ha asignado ninguna
+																			// calificacion sacará una Excepcion
+
+					throw new Exception("El alumno no tiene calificaciones asignadas");
+
+				} else {// Si tiene faltas pasamos a mostrarlas
+
 					for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++) {
 
 						System.out.println(alumnos.get(posicionAlumno).getNotas().get(i).getNota());
-						
-					}
-					
-				}
 
-				
+					}
+
+				}
 
 			}
 
@@ -511,8 +524,8 @@ public class PracticaGrupoMain {
 		// Entradas
 		Scanner entrada = new Scanner(System.in);
 
-		posicion=existeAlumno (alumnos);
-		
+		posicion = existeAlumno(alumnos);
+
 		// Preguntamos si existe el alumno
 		if (posicion != -1) {// Si existe pedimos los datos de la fecha para poner la falta
 
@@ -527,54 +540,53 @@ public class PracticaGrupoMain {
 
 			fechaDia = new Fecha(dia, mes, agno);// Creacion del objeto con los datos introducidos
 
+			// Primero vemos si el alumno tiene alguna falta o no
+			if (alumnos.get(posicion).getFaltas().size() == 0) {// Si no tiene faltas se la ponemos
 
-				// Primero vemos si el alumno tiene alguna falta o no
-				if (alumnos.get(posicion).getFaltas().size() == 0) {//Si no tiene faltas se la ponemos
-						
-					diaClaseAux = new DiaClase(fechaDia);
-						
-					diaClaseAux.getHorario().faltaDiaEntero();//Ponemos la falta en ese dia
-						
-					alumnos.get(posicion).getFaltas().add(diaClaseAux);//La añadimos
-						
-					faltaAsignada = true;
+				diaClaseAux = new DiaClase(fechaDia);
 
-				} else {// Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
+				diaClaseAux.getHorario().faltaDiaEntero();// Ponemos la falta en ese dia
 
-					for (int j = 0; j < alumnos.get(posicion).getFaltas().size(); j++) {
+				alumnos.get(posicion).getFaltas().add(diaClaseAux);// La añadimos
 
-						if (alumnos.get(posicion).getFaltas().get(j).getDia().equals(fechaDia)) { // Si tiene ese mismo dia
+				faltaAsignada = true;
 
-							alumnos.get(posicion).getFaltas().remove(j);//Borramos esa falta
-								
-							diaClaseAux = new DiaClase(fechaDia);//Creamos el objeto con esa fecha
-								
-							diaClaseAux.getHorario().faltaDiaEntero();//Ponemos las faltas en todo el dia en esa fecha
-								
-							alumnos.get(posicion).getFaltas().add(diaClaseAux);//Añadimos ese objeto
-								
-							faltaAsignada = true;
+			} else {// Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
 
-						} else {// Tienes faltas pero de ese dia no
+				for (int j = 0; j < alumnos.get(posicion).getFaltas().size(); j++) {
 
-							diaClaseAux = new DiaClase(fechaDia);
-								
-							diaClaseAux.getHorario().faltaDiaEntero();//Ponemos el dia completo en ese dia
-								
-							alumnos.get(posicion).getFaltas().add(diaClaseAux);//Lo asignamos
-								
-							faltaAsignada = true;
+					if (alumnos.get(posicion).getFaltas().get(j).getDia().equals(fechaDia)) { // Si tiene ese mismo dia
 
-						}
+						alumnos.get(posicion).getFaltas().remove(j);// Borramos esa falta
+
+						diaClaseAux = new DiaClase(fechaDia);// Creamos el objeto con esa fecha
+
+						diaClaseAux.getHorario().faltaDiaEntero();// Ponemos las faltas en todo el dia en esa fecha
+
+						alumnos.get(posicion).getFaltas().add(diaClaseAux);// Añadimos ese objeto
+
+						faltaAsignada = true;
+
+					} else {// Tienes faltas pero de ese dia no
+
+						diaClaseAux = new DiaClase(fechaDia);
+
+						diaClaseAux.getHorario().faltaDiaEntero();// Ponemos el dia completo en ese dia
+
+						alumnos.get(posicion).getFaltas().add(diaClaseAux);// Lo asignamos
+
+						faltaAsignada = true;
 
 					}
 
 				}
-				
+
+			}
+
 		} else {
-			
+
 			throw new Exception("No existe el alumno");
-			
+
 		}
 
 	}
@@ -846,8 +858,7 @@ public class PracticaGrupoMain {
 				}
 
 				break;
-			
-			
+
 			case 7:
 				boolean repetir7 = true;
 				while (repetir7 == true) {
@@ -859,13 +870,13 @@ public class PracticaGrupoMain {
 					repetir7 = repetimos();
 				}
 				break;
-				
-			//Mostrar las calificaciones
+
+			// Mostrar las calificaciones
 			case 8:
 				try {
 					muestraCalificaciones(alumnos);
 				} catch (Exception ex) {
-					
+
 					System.out.println(ex.getMessage());
 				}
 				break;
@@ -945,7 +956,7 @@ public class PracticaGrupoMain {
 				}
 
 				break;
-				
+
 			// Listar faltas.
 			case 12:
 				try {
