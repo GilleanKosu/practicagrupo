@@ -13,21 +13,25 @@ public class PracticaGrupoMain {
 
 	
 	// Método hecho por: Daniel Moreno Navarro
+<<<<<<< HEAD
 	// Ordenamos los alumnos alfabeticamente en orden descendente
 	
+=======
+	//Método para ordenar alfabeticamente los alumnos que se van añadiendo
+>>>>>>> 39fadd00565ff1fc85aab3c492843bc6dc6dab48
 	public static void ordenarAlumnos(ArrayList<Alumno> alumnos, Alumno NuevoAl) {
 
 		//Variables
 		boolean parar = false;
 		int posicion = 0;
 
-		//comprobamos el Array, si no hay alumnos, lo añadimos
+		//comprobamos el Array, si no hay alumnos, lo añadimos directamente
 		if (alumnos.isEmpty()) {	
 			alumnos.add(NuevoAl);
 		} else {
 			
 			//recorremos el arrayList y vamos comparando los apellidos. En el momento en el que 
-			//el apellido del alumno que se va a añadir es mejor que otro apellido, guardamos la
+			//el apellido del alumno que se va a añadir es menor que el apellido en la posicion 'i', guardamos la
 			//posicion 'i' y paramos el bucle 
 			for (int i = 0; i < alumnos.size() && parar == false; i++) {
 				
