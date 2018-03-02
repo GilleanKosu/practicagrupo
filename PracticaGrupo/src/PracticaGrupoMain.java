@@ -157,12 +157,22 @@ public class PracticaGrupoMain {
 	}
 
 	// Compara si existe un elemento de tipo Alumno en el arraylist introducido
-	public static boolean existeAlumno(Alumno alumno, ArrayList<Alumno> arrayAlumnos) {
-		if (arrayAlumnos.contains(alumno)) {
-			return true;
-		} else {
-			return false;
+	public static int existeAlumno (ArrayList<Alumno> arrayAlumnos, String dni) {
+		int posicion = -1;
+		boolean comprobador=false;
+		
+		Scanner entrada = new Scanner(System.in);
+		
+		
+		for (int i=0; i<arrayAlumnos.size(); i++) {
+			
+			if (arrayAlumnos.get(i).getDni().equals(dni) && comprobador==false) {
+				posicion=i;
+				comprobador=true;
+			}
 		}
+		return posicion;
+		
 	}
 
 	// Autor listarAlumnos: Daniel Garrido Castro
@@ -454,11 +464,13 @@ public class PracticaGrupoMain {
 			System.out.println("Introduzca el dni del alumno");
 			dniAlumno = entrada.nextLine();
 
-			if (alumnos.contains(dniAlumno) == false) {
-				System.out.println("El alumno introducido no existe en este centro");
+			if (existeAlumno(alumnos, dniAlumno) == -1) {
+				
+				throw new Exception("El alumno introducido no existe en este centro");
+				
 			} else {
 
-				posicionAlumno = alumnos.lastIndexOf(dniAlumno);
+				posicionAlumno = existeAlumno(alumnos, dniAlumno);
 
 				for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++) {
 
@@ -830,7 +842,12 @@ public class PracticaGrupoMain {
 				break;
 
 			case 8:
-
+				try {
+					muestraCalificaciones(alumnos);
+				} catch (Exception ex) {
+					
+					System.out.println(ex.getMessage());
+				}
 				break;
 
 			// Metodo para poner la falta en un dia completo
