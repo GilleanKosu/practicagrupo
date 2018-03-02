@@ -13,12 +13,8 @@ public class PracticaGrupoMain {
 
 	
 	// Método hecho por: Daniel Moreno Navarro
-<<<<<<< HEAD
-	// Ordenamos los alumnos alfabeticamente en orden descendente
-	
-=======
 	//Método para ordenar alfabeticamente los alumnos que se van añadiendo
->>>>>>> 39fadd00565ff1fc85aab3c492843bc6dc6dab48
+
 	public static void ordenarAlumnos(ArrayList<Alumno> alumnos, Alumno NuevoAl) {
 
 		//Variables
