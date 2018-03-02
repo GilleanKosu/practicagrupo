@@ -713,7 +713,6 @@ public class PracticaGrupoMain {
 			throw new Exception("No hay alumnos dados de alta");
 		} else {
 			for (int i = 0; i < lista.size(); i++) {// recorrerá lista de alumnos.
-				// ArrayList<DiaClase> faltas = lista.get(i).getFaltas();//obtenemos lista
 				// faltas
 				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());
 				for (int j = 0; j < lista.get(i).getFaltas().size(); j++) {
