@@ -23,11 +23,20 @@ public class PracticaGrupoMain {
 			alumnos.add(NuevoAl);
 		} else {
 			for (int i = 0; i < alumnos.size() && parar == false; i++) {
+				
 				posicion = i;
+				
 				if (NuevoAl.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos()) < 0) {
+					
 					parar = true;
+					
+					/* Para Pruebas
+					System.out.println("Numero: " + NuevoAl.getApellidos().compareToIgnoreCase(alumnos.get(i).getApellidos()));
+					System.out.println("posicion: " + i);*/
+					
 				}
 			}
+			
 			if (parar) {
 				alumnos.add(posicion, NuevoAl);
 			} else {
