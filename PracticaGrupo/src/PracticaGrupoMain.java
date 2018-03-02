@@ -222,76 +222,86 @@ public class PracticaGrupoMain {
 		String dni = new String();// donde guardar el dni del alumno a modificar
 		String aux = new String();// usada para modificar datos del alumno
 		int opcion;
+		int posicion;
 		boolean encontrado = false;
+
 
 		// Muestra la lista de alumnos
 		listarAlumnos(alumnos);
 
-		// Pide cuál se quiere modificar
-		System.out.println("Introd. el dni del alumno a modificar: ");
-		dni = entrada.nextLine();
-
-		// Recorro la lista de alumnos para ver si existe el dni
-		for (int i = 0; i < alumnos.size() && !encontrado; i++) {
-
-			if (alumnos.get(i).getDni().equals(dni)) {// Si el dni está en el arraylist
-				encontrado = true;
-				System.out.println("\n¿Que dato quiere modificar del alumno " + dni + "?");
-				System.out.println("1. DNI");
-				System.out.println("2. Nombre");
-				System.out.println("3. Apellidos");
-				System.out.println("4. Telefono");
-				System.out.println("5. email");
-				System.out.println("6. Salir");
-				opcion = entrada.nextInt();
-				entrada.nextLine();// Limpiar buffer
-
-				switch (opcion) {
+		posicion=existeAlumno(alumnos);
+		
+		if(posicion==-1) {
+			throw new Exception("No existe el alumno indicado");
+		}
+		
+		do {
+			System.out.println("\n¿Que dato quiere modificar del alumno " + dni + "?");
+			System.out.println("1. DNI");
+			System.out.println("2. Nombre");
+			System.out.println("3. Apellidos");
+			System.out.println("4. Telefono");
+			System.out.println("5. email");
+			System.out.println("6. Salir");
+			opcion = entrada.nextInt();
+			entrada.nextLine();// Limpiar buffer
+			
+			switch(opcion) {
+			//Cambiar dni
 				case 1:
 					System.out.println("Antiguo dni: " + dni + " ¿Cual es el nuevo DNI?");
 					aux = entrada.nextLine();
 					if (alumnos.contains(new Alumno(aux)))
 						throw new Exception("ERROR! El DNI introducido ya pertenece a otro alumno");
 					else {
-						alumnos.get(i).setDni(aux);
-						System.out.println("El dni del alumno ahora es: " + alumnos.get(i).getDni());
+						alumnos.get(posicion).setDni(aux);
+						System.out.println("El dni del alumno ahora es: " + alumnos.get(posicion).getDni());
 					}
 					break;
+					
+			//Cambiar nombre		
 				case 2:
-					System.out.println("Antiguo nombre: " + alumnos.get(i).getNombre() + " ¿Cual es el nuevo nombre?");
+					System.out.println("Antiguo nombre: " + alumnos.get(posicion).getNombre() + " ¿Cual es el nuevo nombre?");
 					aux = entrada.nextLine();
-					alumnos.get(i).setNombre(aux);
-					System.out.println("El alumno ahora se llama: " + alumnos.get(i).getNombre());
+					alumnos.get(posicion).setNombre(aux);
+					System.out.println("El alumno ahora se llama: " + alumnos.get(posicion).getNombre());
 					break;
+					
+			//Cambiar Apellidos		
 				case 3:
-					System.out.println(
-							"Antiguo apellido: " + alumnos.get(i).getApellidos() + " ¿Cual es el nuevo apellido?");
+					System.out.println("Antiguo apellido: " + alumnos.get(posicion).getApellidos() + " ¿Cual es el nuevo apellido?");
 					aux = entrada.nextLine();
-					alumnos.get(i).setApellidos(aux);
-					System.out.println("El alumno ahora se apellida: " + alumnos.get(i).getApellidos());
+					alumnos.get(posicion).setApellidos(aux);
+					System.out.println("El alumno ahora se apellida: " + alumnos.get(posicion).getApellidos());
 					break;
+			
+			//Cambiar Telefono
 				case 4:
-					System.out.println("Antiguo tlf: " + alumnos.get(i).getTelefono() + " ¿Cual es el nuevo telefono?");
+					System.out.println("Antiguo tlf: " + alumnos.get(posicion).getTelefono() + " ¿Cual es el nuevo telefono?");
 					aux = entrada.nextLine();
-					alumnos.get(i).setTelefono(aux);
-					System.out.println("El tlf del alumno ahora es: " + alumnos.get(i).getTelefono());
+					alumnos.get(posicion).setTelefono(aux);
+					System.out.println("El tlf del alumno ahora es: " + alumnos.get(posicion).getTelefono());
 					break;
+					
+			//Cambiar email
 				case 5:
-					System.out.println("Antiguo email: " + alumnos.get(i).getEmail() + " ¿Cual es el nuevo email?");
+					System.out.println("Antiguo email: " + alumnos.get(posicion).getEmail() + " ¿Cual es el nuevo email?");
 					aux = entrada.nextLine();
-					alumnos.get(i).setEmail(aux);
-					System.out.println("El email del alumno ahora es: " + alumnos.get(i).getEmail());
+					alumnos.get(posicion).setEmail(aux);
+					System.out.println("El email del alumno ahora es: " + alumnos.get(posicion).getEmail());
 					break;
+					
+			//Salir		
 				case 6:
 					System.out.println("Ha elegido salir");
 					break;
+					
+			//Opcion incorrecta
 				default:
 					System.out.println("Opción incorrecta. Pruebe con una en [1,6]");
-				}
+					break;
 			}
-		}
-		if (!encontrado)
-			throw new Exception("No existe el alumno indicado");
+		}while(opcion!=6);	
 	}
 
 	// Autor matricularAlumnos: Daniel Garrido Castro
@@ -300,49 +310,44 @@ public class PracticaGrupoMain {
 	// (no lo vamos a matricular de algo donde ya está matriculado).
 	// En ese caso, lo matricula
 	public static void matricularAlumno(ArrayList<Alumno> alumnos) throws Exception {
+		
 		// Declaración de variables
-
 		Scanner entrada = new Scanner(System.in);
-		String dni = new String();
 		Calificacion calificacionAux;
-		ArrayList<Calificacion> notas = new ArrayList<Calificacion>();
-		String[] asignaturas = { "FOL", "Sistemas", "Entornos de desarrollo", "Programacion", "Lenguajes de marcas",
-				"Bases de datos" };
+		String[] asignaturas = { "FOL", "Sistemas", "Entornos de desarrollo", "Programacion", "Lenguajes de marcas", "Bases de datos" };
 		int opcion;
-
+		int posicion;
+		
+		//Si no hay alumnos, no podemos hacer nada... lanzamos excepcion
 		if (alumnos.size() == 0)
 			throw new Exception("Error!. Aun no hay alumnos en el listado");
-		else {
-			// Pide cuál se quiere matricular
-			System.out.println("Introd. el dni del alumno a matricular: ");
-			dni = entrada.nextLine();
-
-			if (!alumnos.contains(new Alumno(dni))) {// El alumno no está en el conjunto
-				throw new Exception("Error!. No existe el alumno " + dni);
-			} else {// El alumno sí está, pedimos la asignatura en que lo vamos a matricular
-				do {
-					System.out.println("¿De qué asignatura se va a matricular?");
-					for (int i = 0; i < asignaturas.length; i++) {
-						System.out.println((i) + " " + asignaturas[i]);
-					}
-					opcion = entrada.nextInt();
-					entrada.nextLine();// Limpiar buffer
-
-					if (opcion < 0 || opcion > 5)
-						System.out.println("Debe elegir un valor en [0,5]. Pruebe otra vez");
-				} while (opcion < 0 || opcion > 5);
-							
-				//Si ya está matriculado de esa asignatura, lanzo excepción, si no, lo matriculo
-				if( alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().contains(asignaturas[opcion]) ) {
-					throw new Exception("Ya matriculado");
-				}
-				//lo matriculo
-				calificacionAux = new Calificacion(asignaturas[opcion]);
-				calificacionAux.setNota("NE");
-				alumnos.get(alumnos.indexOf(new Alumno(dni))).getNotas().add(calificacionAux);
-//				alumnos.get(i).getNotas().add(calificacionAux);
+		
+		//Si llegamos aquí, si hay alumnos, así que pedimos el dni a modificar
+		posicion=existeAlumno(alumnos);
+		
+		if(posicion==-1)
+			throw new Exception("Error!. No existe el alumno indicado.");
+		
+		do {
+			System.out.println("¿De qué asignatura se va a matricular?");
+			for (int i = 0; i < asignaturas.length; i++) {
+				System.out.println((i) + " " + asignaturas[i]);
 			}
+			opcion = entrada.nextInt();
+			entrada.nextLine();// Limpiar buffer
+
+			if (opcion < 0 || opcion > 5)
+				System.out.println("Debe elegir un valor en [0,5]. Pruebe otra vez");
+		} while (opcion < 0 || opcion > 5);
+		
+		//Si ya está matriculado de esa asignatura, lanzo excepción, si no, lo matriculo
+		if( alumnos.get(posicion).getNotas().contains(asignaturas[opcion]) ) {
+			throw new Exception("Ya matriculado");
 		}
+		//lo matriculo
+		calificacionAux = new Calificacion(asignaturas[opcion]);
+		calificacionAux.setNota("NE");
+		alumnos.get(posicion).getNotas().add(calificacionAux);
 	}
 
 	// Dar de baja - Danut Nelu Moldovan
