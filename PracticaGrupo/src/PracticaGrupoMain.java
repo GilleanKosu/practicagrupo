@@ -13,6 +13,8 @@ public class PracticaGrupoMain {
 
 	
 	// Método hecho por: Daniel Moreno Navarro
+	// Ordenamos los alumnos alfabeticamente en orden descendente
+	
 	public static void ordenarAlumnos(ArrayList<Alumno> alumnos, Alumno NuevoAl) {
 
 		//Variables
@@ -57,6 +59,7 @@ public class PracticaGrupoMain {
 	}
 
 	// Método hecho por: Daniel Moreno Navarro
+	// Introducimos los datos del alumno que queremos dar de alta en nuestra lista
 	public static void altaAlumno(ArrayList<Alumno> alumnos) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
@@ -100,6 +103,8 @@ public class PracticaGrupoMain {
 	}
 
 	// Método hecho por: Daniel Moreno Navarro
+	// Eliminamos a ese alumno de nuestra lista
+	
 	public static void bajaAlumno(ArrayList<Alumno> alumnos) throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
@@ -141,48 +146,6 @@ public class PracticaGrupoMain {
 		}
 	}
 
-	// Compara si existe un elemento en concreto de tipo Fecha en el arraylist
-	// introducido
-	public static boolean existeFecha(Fecha fecha, ArrayList<Fecha> arrayFechas) {
-
-		if (arrayFechas.contains(fecha)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Compara si existe un elemento en concreto de tipo Horario en el arraylist
-	// introducido(Puede que no sea necesario)
-	public static boolean existeHorario(Horario horario, ArrayList<Horario> arrayHorario) {
-		if (arrayHorario.contains(horario)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Comprara si existe un elemento en concreto de tipo DiaClase en el arraylist
-	// introducido
-	public static boolean existeDiaClase(DiaClase dia, ArrayList<DiaClase> arrayDiasClase) {
-
-		if (arrayDiasClase.contains(dia)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	// Compara si existe un elemento en concreto de tipo Calificacion en el
-	// arraylist
-	public static boolean existeCalificacion(Calificacion calificacion, ArrayList<Calificacion> arrayCalificacion) {
-
-		if (arrayCalificacion.contains(calificacion)) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
 	// Autor: Puri Amoros (Antonio solo ha modificado el mensaje del DNI)
 	// Comprobar si existe el alumno
@@ -379,6 +342,8 @@ public class PracticaGrupoMain {
 	}
 
 	// Dar de baja - Danut Nelu Moldovan
+	// Eliminamos la asignatura que elijamos del alumno
+	
 	public static void darDeBaja(ArrayList<Alumno> alumnos) throws Exception {
 		
 		// Entradas
@@ -423,13 +388,18 @@ public class PracticaGrupoMain {
 	}
 
 	// Calificacion trimestral - Danut Nelu Moldovan
+	//Introducimos la nota trimestral de las asignaturas que tenga ese alumno que hemos elegido previamente
+	
 	public static void ponerCalificacion(ArrayList<Alumno> alumnos) throws Exception {
 		Scanner teclado = new Scanner(System.in);
 		int posicion = existeAlumno(alumnos);
+		
 		// Se comprueba si el alumno existe
 		if (posicion != -1) {
+			
 			// Se compueba si el alumno está matriculado en alguna asignatura.
 			if (alumnos.get(posicion).getNotas().size() != 0) {
+				
 				// Se recorre arraylist de que contiene las notas del alumno y pedimos la nota
 				// de cada asignatura
 				for (int i = 0; i < alumnos.get(posicion).getNotas().size(); i++) {
@@ -460,7 +430,7 @@ public class PracticaGrupoMain {
 	}
 
 	// Autor: Antonio Garcia
-	// 8. Mostrar las calificaciones
+	// Mostramos las calificaciones del alumno que elijamos
 
 	public static void muestraCalificaciones(ArrayList<Alumno> alumnos) throws Exception {
 
@@ -509,7 +479,7 @@ public class PracticaGrupoMain {
 	}
 
 	// Autor: Antonio Garcia
-	// 9. Poner el dia completo como que ha faltado
+	// Ponermos el dia completo como que ha faltado del alumno que elijamos
 	public static void ponerFaltaDiaCompleto(ArrayList<Alumno> alumnos) throws Exception {
 
 		// Variables
@@ -580,7 +550,7 @@ public class PracticaGrupoMain {
 
 			}
 
-		} else {
+		} else {//Si no existe el alumno
 
 			throw new Exception("No existe el alumno");
 
@@ -589,7 +559,7 @@ public class PracticaGrupoMain {
 	}
 
 	// Autor: Antonio Garcia
-	// 10. Poner la falta de la hora en concreto
+	// Se le pone al alumno la falta en la sesion del dia que se especifica
 	public static void ponerFaltasSesion(ArrayList<Alumno> alumnos, Fecha fechaDia) throws Exception {
 
 		// Variables
@@ -694,27 +664,36 @@ public class PracticaGrupoMain {
 
 		// Si no hay alumnos, lanzamos excepcion
 		if (lista.size() == 0) {
+			
 			throw new Exception("No hay alumnos dados de alta");
+			
 		} else {// Si hay alumnos, así que pasamos lista
+			
 			for (int i = 0; i < lista.size(); i++) {// recorrerá lista de alumnos.
-				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());// obtendremos
-																												// el
-																												// alumno.
+				
+				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());// obtendremos el alumno
+					
+				//Preguntamos si esta
 				System.out.println("¿Esta?");
 				System.out.println("pulsa cualquier numero para SI o 0 para NO");
 				esta = entrada.nextInt();
+				
 				if (esta == 0) {// si no esta pediremos el dia y la hora que ha faltado.
 
-					// Pedir fecha
+					// Pedir los datos de la fecha
+					
 					System.out.println("Dime el dia");
 					dia = entrada.nextInt();
+					
 					System.out.println("Dime el mes");
 					mes = entrada.nextInt();
+					
 					System.out.println("Dime el año");
 					agno = entrada.nextInt();
-					fechaAux = new Fecha(dia, mes, agno);
+					
+					fechaAux = new Fecha(dia, mes, agno);//Asignamos los datos al objeto
 
-					ponerFaltasSesion(lista, fechaAux);
+					ponerFaltasSesion(lista, fechaAux);//Le asigna la falta a esa sesion 
 				}
 
 			}
@@ -722,20 +701,23 @@ public class PracticaGrupoMain {
 	}
 
 	// hecho por:juanra.
+	//Lista las faltas que tienen todos los alumnos
 	public static void listarFaltas(ArrayList<Alumno> lista) throws Exception {
 		Fecha fechaAux;
 		if (lista.size() == 0) {
 			throw new Exception("No hay alumnos dados de alta");
 		} else {
 			for (int i = 0; i < lista.size(); i++) {// recorrerá lista de alumnos.
-				// ArrayList<DiaClase> faltas = lista.get(i).getFaltas();//obtenemos lista
-				// faltas
-				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());
-				for (int j = 0; j < lista.get(i).getFaltas().size(); j++) {
-					fechaAux = lista.get(i).getFaltas().get(j).getDia();
-					System.out.println(
-							"\nDia: " + fechaAux.getDia() + "/" + fechaAux.getMes() + "/" + fechaAux.getAgno());
-					lista.get(i).getFaltas().get(j).getHorario().imprimeHora();
+				
+				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());//Muestra el alumno
+				
+				for (int j = 0; j < lista.get(i).getFaltas().size(); j++) {//Recorre el arraylist de faltas
+					
+					fechaAux = lista.get(i).getFaltas().get(j).getDia();//Fecha de las faltas
+					
+					System.out.println("\nDia: " + fechaAux.getDia() + "/" + fechaAux.getMes() + "/" + fechaAux.getAgno());//Muestra la fecha
+					
+					lista.get(i).getFaltas().get(j).getHorario().imprimeHora();//Muestra las faltas de esas sesiones
 				}
 			}
 		}
