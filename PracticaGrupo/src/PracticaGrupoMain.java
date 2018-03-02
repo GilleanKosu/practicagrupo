@@ -462,16 +462,14 @@ public class PracticaGrupoMain {
 			
 		} else {//Si no esta vacio preguntaremos el dni del alumno para mostrar sus datos
 			
-			System.out.println("Introduzca el dni del alumno");
-			dniAlumno = entrada.nextLine();
+			posicionAlumno = existeAlumno(alumnos);
 
-			if (existeAlumno(alumnos, dniAlumno) == -1) {//Si el alumno no esta devolvera -1 y lanzara la excepcion
+			if (posicionAlumno == -1) {//Si el alumno no esta devolvera -1 y lanzara la excepcion
 				
 				throw new Exception("El alumno introducido no existe en este centro");
 				
 			} else {//Como el alumno está sacamos la posicion en la que se encuentra
 				
-				posicionAlumno = existeAlumno(alumnos, dniAlumno);
 				
 				if (alumnos.get(posicionAlumno).getNotas().size()==0) {//Si al alumno no se le ha asignado ninguna calificacion sacará una Excepcion
 					
@@ -500,8 +498,7 @@ public class PracticaGrupoMain {
 	public static void ponerFaltaDiaCompleto(ArrayList<Alumno> alumnos) throws Exception {
 
 		// Variables
-		String dni;
-		int dia, mes, agno;
+		int dia, mes, agno, posicion;
 		boolean faltaAsignada = false;
 		DiaClase diaClaseAux;
 		Fecha fechaDia;
@@ -509,11 +506,10 @@ public class PracticaGrupoMain {
 		// Entradas
 		Scanner entrada = new Scanner(System.in);
 
-		System.out.println("Dni");
-		dni = entrada.nextLine();
-
+		posicion=existeAlumno (alumnos);
+		
 		// Preguntamos si existe el alumno
-		if (alumnos.contains(new Alumno(dni))) {// Si existe pedimos los datos de la fecha para poner la falta
+		if (posicion != -1) {// Si existe pedimos los datos de la fecha para poner la falta
 
 			System.out.println("dia");
 			dia = entrada.nextInt();
@@ -526,60 +522,54 @@ public class PracticaGrupoMain {
 
 			fechaDia = new Fecha(dia, mes, agno);// Creacion del objeto con los datos introducidos
 
-			// Recorremos el Araylist de Alumno
-			for (int i = 0; i < alumnos.size() && faltaAsignada == false; i++) {
 
-				if (alumnos.get(i).getDni().equals(dni)) {
-
-					// Primero vemos si el alumno tiene alguna falta o no
-					if (alumnos.get(i).getFaltas().size() == 0) {//Si no tiene faltas se la ponemos
+				// Primero vemos si el alumno tiene alguna falta o no
+				if (alumnos.get(posicion).getFaltas().size() == 0) {//Si no tiene faltas se la ponemos
 						
-						diaClaseAux = new DiaClase(fechaDia);
+					diaClaseAux = new DiaClase(fechaDia);
 						
-						diaClaseAux.getHorario().faltaDiaEntero();//Ponemos la falta en ese dia
+					diaClaseAux.getHorario().faltaDiaEntero();//Ponemos la falta en ese dia
 						
-						alumnos.get(i).getFaltas().add(diaClaseAux);//La añadimos
+					alumnos.get(posicion).getFaltas().add(diaClaseAux);//La añadimos
 						
-						faltaAsignada = true;
+					faltaAsignada = true;
 
-					} else {// Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
+				} else {// Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
 
-						for (int j = 0; j < alumnos.get(i).getFaltas().size(); j++) {
+					for (int j = 0; j < alumnos.get(posicion).getFaltas().size(); j++) {
 
-							if (alumnos.get(i).getFaltas().get(j).getDia().equals(fechaDia)) { // Si tiene ese mismo dia
+						if (alumnos.get(posicion).getFaltas().get(j).getDia().equals(fechaDia)) { // Si tiene ese mismo dia
 
-								alumnos.get(i).getFaltas().remove(j);//Borramos esa falta
+							alumnos.get(posicion).getFaltas().remove(j);//Borramos esa falta
 								
-								diaClaseAux = new DiaClase(fechaDia);//Creamos el objeto con esa fecha
+							diaClaseAux = new DiaClase(fechaDia);//Creamos el objeto con esa fecha
 								
-								diaClaseAux.getHorario().faltaDiaEntero();//Ponemos las faltas en todo el dia en esa fecha
+							diaClaseAux.getHorario().faltaDiaEntero();//Ponemos las faltas en todo el dia en esa fecha
 								
-								alumnos.get(i).getFaltas().add(diaClaseAux);//Añadimos ese objeto
+							alumnos.get(posicion).getFaltas().add(diaClaseAux);//Añadimos ese objeto
 								
-								faltaAsignada = true;
+							faltaAsignada = true;
 
-							} else {// Tienes faltas pero de ese dia no
+						} else {// Tienes faltas pero de ese dia no
 
-								diaClaseAux = new DiaClase(fechaDia);
+							diaClaseAux = new DiaClase(fechaDia);
 								
-								diaClaseAux.getHorario().faltaDiaEntero();//Ponemos el dia completo en ese dia
+							diaClaseAux.getHorario().faltaDiaEntero();//Ponemos el dia completo en ese dia
 								
-								alumnos.get(i).getFaltas().add(diaClaseAux);//Lo asignamos
+							alumnos.get(posicion).getFaltas().add(diaClaseAux);//Lo asignamos
 								
-								faltaAsignada = true;
-
-							}
+							faltaAsignada = true;
 
 						}
 
 					}
 
 				}
-
-			}
-
+				
 		} else {
+			
 			throw new Exception("No existe el alumno");
+			
 		}
 
 	}
