@@ -15,13 +15,18 @@ public class PracticaGrupoMain {
 	// Método hecho por: Daniel Moreno Navarro
 	public static void ordenarAlumnos(ArrayList<Alumno> alumnos, Alumno NuevoAl) {
 
+		//Variables
 		boolean parar = false;
 		int posicion = 0;
 
-		//if (alumnos.size() == 0) {
+		//comprobamos el Array, si no hay alumnos, lo añadimos
 		if (alumnos.isEmpty()) {	
 			alumnos.add(NuevoAl);
 		} else {
+			
+			//recorremos el arrayList y vamos comparando los apellidos. En el momento en el que 
+			//el apellido del alumno que se va a añadir es mejor que otro apellido, guardamos la
+			//posicion 'i' y paramos el bucle 
 			for (int i = 0; i < alumnos.size() && parar == false; i++) {
 				
 				posicion = i;
@@ -37,9 +42,14 @@ public class PracticaGrupoMain {
 				}
 			}
 			
+			//Si el buble se ha parado en algun momento, añaadimos el alumno en esa posicion
 			if (parar) {
-				alumnos.add(posicion, NuevoAl);
+				alumnos.add(posicion, NuevoAl);	
+				
+			//Si 'parar' no es 'true', significa que el for ha seguido hasta el final y que
+			//el apellido es el último, asi que lo añadimos después de posición
 			} else {
+					
 				alumnos.add(posicion + 1, NuevoAl);
 			}
 
@@ -51,6 +61,7 @@ public class PracticaGrupoMain {
 
 		Scanner entrada = new Scanner(System.in);
 
+		
 		// Creamos un alumno "nuevoAlumno" y pedimos el DNI
 		System.out.println("DNI del alumno:");
 		Alumno nuevoAlumno = new Alumno(entrada.nextLine());
@@ -76,11 +87,15 @@ public class PracticaGrupoMain {
 		// y si no está, lo añadimos, llamando al método ordenarAlumnos para que se vayan
 		//incluyendo en el arrayList por orden alfabético.
 		if (alumnos.contains(nuevoAlumno)) {
+			
 			throw new Exception("Error. El alumno ya existe.\n");
+			
 		} else {
+			
 			ordenarAlumnos(alumnos, nuevoAlumno);
-			// alumnos.add(nuevoAlumno);
+			
 			System.out.println("Alumno añadido.\n");
+			
 		}
 	}
 
