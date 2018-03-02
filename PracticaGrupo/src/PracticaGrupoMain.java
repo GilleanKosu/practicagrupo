@@ -424,7 +424,7 @@ public class PracticaGrupoMain {
 							excepcion = false;
 							System.out.println(
 									"Introduzca la nota de " + alumnos.get(posicion).getNotas().get(i).getAsignatura());
-							alumnos.get(posicion).getNotas().get(0).setNota(teclado.nextLine());
+							alumnos.get(posicion).getNotas().get(i).setNota(teclado.nextLine());
 
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
