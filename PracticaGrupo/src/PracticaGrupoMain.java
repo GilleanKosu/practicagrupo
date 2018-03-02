@@ -160,13 +160,22 @@ public class PracticaGrupoMain {
 		}
 	}
 
-	// Compara si existe un elemento de tipo Alumno en el arraylist introducido
-	public static boolean existeAlumno(Alumno alumno, ArrayList<Alumno> arrayAlumnos) {
-		if (arrayAlumnos.contains(alumno)) {
-			return true;
-		} else {
-			return false;
-		}
+	
+	//Autor: Puri Amoros (Antonio solo ha modificado el mensaje del DNI)
+	//Comprobar si existe el alumno
+	public static int existeAlumno (ArrayList<Alumno> arrayAlumnos) {
+			
+		Scanner entrada = new Scanner(System.in);
+		
+		System.out.println("Introduzca el dni:");
+		String dni = entrada.nextLine();
+		
+		Alumno aBuscar = new Alumno(dni);
+		
+		int posicion = arrayAlumnos.indexOf(aBuscar);
+		
+		return posicion;
+		
 	}
 
 	// Autor listarAlumnos: Daniel Garrido Castro
@@ -418,7 +427,7 @@ public class PracticaGrupoMain {
 							excepcion = false;
 							System.out.println(
 									"Introduzca la nota de " + alumnos.get(posicion).getNotas().get(i).getAsignatura());
-							alumnos.get(posicion).getNotas().get(0).setNota(teclado.nextLine());
+							alumnos.get(posicion).getNotas().get(i).setNota(teclado.nextLine());
 
 						} catch (Exception e) {
 							System.out.println(e.getMessage());
@@ -434,40 +443,55 @@ public class PracticaGrupoMain {
 		} else {
 			throw new Exception("Alumno no encontrado");
 		}
-		// Se imprimen las calificaciones
-		System.out.println("Calificaciones:");
-		for (int i = 0; i < alumnos.get(posicion).getNotas().size(); i++) {
-			System.out.println(alumnos.get(posicion).getNotas().get(i).getNota());
-		}
+		
 	}
 
 	// Autor: Antonio Garcia
 	// 8. Mostrar las calificaciones
 
 	public static void muestraCalificaciones(ArrayList<Alumno> alumnos) throws Exception {
-
+		
+		//Variables
 		String dniAlumno;
 		int posicionAlumno;
-
+		
+		//Entradas
 		Scanner entrada = new Scanner(System.in);
-
-		if (alumnos.size() == 0) {
+		
+		//Procesos
+		
+		if (alumnos.size() == 0) {//Comprobamos si el array esta vacio
+			
 			throw new Exception("No hay alumnos de los que mostrar las calificaciones");
-		} else {
-
+			
+		} else {//Si no esta vacio preguntaremos el dni del alumno para mostrar sus datos
+			
 			System.out.println("Introduzca el dni del alumno");
 			dniAlumno = entrada.nextLine();
 
-			if (alumnos.contains(dniAlumno) == false) {
-				System.out.println("El alumno introducido no existe en este centro");
-			} else {
+			if (existeAlumno(alumnos, dniAlumno) == -1) {//Si el alumno no esta devolvera -1 y lanzara la excepcion
+				
+				throw new Exception("El alumno introducido no existe en este centro");
+				
+			} else {//Como el alumno está sacamos la posicion en la que se encuentra
+				
+				posicionAlumno = existeAlumno(alumnos, dniAlumno);
+				
+				if (alumnos.get(posicionAlumno).getNotas().size()==0) {//Si al alumno no se le ha asignado ninguna calificacion sacará una Excepcion
+					
+					throw new Exception ("El alumno no tiene calificaciones asignadas");
+					
+				} else {//Si tiene faltas pasamos a mostrarlas
+					
+					for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++) {
 
-				posicionAlumno = alumnos.lastIndexOf(dniAlumno);
-
-				for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++) {
-
-					System.out.println(alumnos.get(posicionAlumno).getNotas().get(i).getNota());
+						System.out.println(alumnos.get(posicionAlumno).getNotas().get(i).getNota());
+						
+					}
+					
 				}
+
+				
 
 			}
 
@@ -512,10 +536,14 @@ public class PracticaGrupoMain {
 				if (alumnos.get(i).getDni().equals(dni)) {
 
 					// Primero vemos si el alumno tiene alguna falta o no
-					if (alumnos.get(i).getFaltas().size() == 0) {
+					if (alumnos.get(i).getFaltas().size() == 0) {//Si no tiene faltas se la ponemos
+						
 						diaClaseAux = new DiaClase(fechaDia);
-						diaClaseAux.getHorario().faltaDiaEntero();
-						alumnos.get(i).getFaltas().add(diaClaseAux);
+						
+						diaClaseAux.getHorario().faltaDiaEntero();//Ponemos la falta en ese dia
+						
+						alumnos.get(i).getFaltas().add(diaClaseAux);//La añadimos
+						
 						faltaAsignada = true;
 
 					} else {// Si tiene faltas, buscamos si tiene el mismo dia que la queremos poner
@@ -524,17 +552,24 @@ public class PracticaGrupoMain {
 
 							if (alumnos.get(i).getFaltas().get(j).getDia().equals(fechaDia)) { // Si tiene ese mismo dia
 
-								alumnos.get(i).getFaltas().remove(j);
-								diaClaseAux = new DiaClase(fechaDia);
-								diaClaseAux.getHorario().faltaDiaEntero();
-								alumnos.get(i).getFaltas().add(diaClaseAux);
+								alumnos.get(i).getFaltas().remove(j);//Borramos esa falta
+								
+								diaClaseAux = new DiaClase(fechaDia);//Creamos el objeto con esa fecha
+								
+								diaClaseAux.getHorario().faltaDiaEntero();//Ponemos las faltas en todo el dia en esa fecha
+								
+								alumnos.get(i).getFaltas().add(diaClaseAux);//Añadimos ese objeto
+								
 								faltaAsignada = true;
 
 							} else {// Tienes faltas pero de ese dia no
 
 								diaClaseAux = new DiaClase(fechaDia);
-								diaClaseAux.getHorario().faltaDiaEntero();
-								alumnos.get(i).getFaltas().add(diaClaseAux);
+								
+								diaClaseAux.getHorario().faltaDiaEntero();//Ponemos el dia completo en ese dia
+								
+								alumnos.get(i).getFaltas().add(diaClaseAux);//Lo asignamos
+								
 								faltaAsignada = true;
 
 							}
@@ -820,7 +855,8 @@ public class PracticaGrupoMain {
 				}
 
 				break;
-
+			
+			
 			case 7:
 				boolean repetir7 = true;
 				while (repetir7 == true) {
@@ -832,12 +868,18 @@ public class PracticaGrupoMain {
 					repetir7 = repetimos();
 				}
 				break;
-
+				
+			//Mostrar las calificaciones
 			case 8:
-
+				try {
+					muestraCalificaciones(alumnos);
+				} catch (Exception ex) {
+					
+					System.out.println(ex.getMessage());
+				}
 				break;
 
-			// Metodo para poner la falta en un dia completo
+			// Poner falta en un dia completo
 			case 9:
 				try {
 
@@ -851,7 +893,7 @@ public class PracticaGrupoMain {
 
 				break;
 
-			// Metodo para poner una falta en una sesion
+			// Poner una falta en una sesion
 			case 10:
 
 				String dni;
@@ -901,7 +943,7 @@ public class PracticaGrupoMain {
 
 				break;
 
-			// Metodo pasar lista.
+			// Pasar lista.
 			case 11:
 				// Llamamos al metodo
 
@@ -912,7 +954,8 @@ public class PracticaGrupoMain {
 				}
 
 				break;
-			// listar faltas.
+				
+			// Listar faltas.
 			case 12:
 				try {
 					listarFaltas(alumnos);
