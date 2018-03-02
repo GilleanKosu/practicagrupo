@@ -699,7 +699,7 @@ public class PracticaGrupoMain {
 					agno = entrada.nextInt();
 					fechaAux = new Fecha(dia, mes, agno);
 
-					ponerFaltasSesion(lista, lista.get(i).getDni(), fechaAux);
+					ponerFaltasSesion(lista, lista.get(i).getDni(), fechaAux);//asiga la falta a la sesion.
 				}
 
 			}
@@ -707,19 +707,18 @@ public class PracticaGrupoMain {
 	}
 
 	// hecho por:juanra.
+	//recorrera todos los alunmos e irá mostrando las faltas de cada alunmo.
 	public static void listarFaltas(ArrayList<Alumno> lista) throws Exception {
 		Fecha fechaAux;
-		if (lista.size() == 0) {
+		if (lista.size() == 0) {//si no hay alunmos lazara excepcion.
 			throw new Exception("No hay alumnos dados de alta");
 		} else {
 			for (int i = 0; i < lista.size(); i++) {// recorrerá lista de alumnos.
-				// faltas
-				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());
-				for (int j = 0; j < lista.get(i).getFaltas().size(); j++) {
-					fechaAux = lista.get(i).getFaltas().get(j).getDia();
-					System.out.println(
-							"\nDia: " + fechaAux.getDia() + "/" + fechaAux.getMes() + "/" + fechaAux.getAgno());
-					lista.get(i).getFaltas().get(j).getHorario().imprimeHora();
+				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());//muestra al alunmo
+				for (int j = 0; j < lista.get(i).getFaltas().size(); j++) {//recorre las faltas
+					fechaAux = lista.get(i).getFaltas().get(j).getDia();//obtiene el dia de las faltas
+					System.out.println("\nDia: " + fechaAux.getDia() + "/" + fechaAux.getMes() + "/" + fechaAux.getAgno());//muestra la fecha de la faltas
+					lista.get(i).getFaltas().get(j).getHorario().imprimeHora();//muestra las faltas que tiene en cada sesion.
 				}
 			}
 		}
