@@ -466,7 +466,7 @@ public class PracticaGrupoMain {
 
 					for (int i = 0; i < alumnos.get(posicionAlumno).getNotas().size(); i++) {
 
-						System.out.println(alumnos.get(posicionAlumno).getNotas().get(i).getNota());
+						System.out.println("El alumno tiene un " + alumnos.get(posicionAlumno).getNotas().get(i).getNota() + " en " + alumnos.get(posicionAlumno).getNotas().get(i).getAsignatura());
 
 					}
 
