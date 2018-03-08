@@ -693,11 +693,9 @@ public class PracticaGrupoMain {
 					
 					fechaAux = new Fecha(dia, mes, agno);//Asignamos los datos al objeto
 
-<<<<<<< HEAD
-					ponerFaltasSesion(lista, lista.get(i).getDni(), fechaAux);//asiga la falta a la sesion.
-=======
+
 					ponerFaltasSesion(lista, fechaAux);//Le asigna la falta a esa sesion 
->>>>>>> 5921a9d127379ac687b6fbe24de3c6ceefbe517d
+
 				}
 
 			}
@@ -705,24 +703,16 @@ public class PracticaGrupoMain {
 	}
 
 	// hecho por:juanra.
-<<<<<<< HEAD
-	//recorrera todos los alunmos e irá mostrando las faltas de cada alunmo.
-=======
+
 	//Lista las faltas que tienen todos los alumnos
->>>>>>> 5921a9d127379ac687b6fbe24de3c6ceefbe517d
+
 	public static void listarFaltas(ArrayList<Alumno> lista) throws Exception {
 		Fecha fechaAux;
 		if (lista.size() == 0) {//si no hay alunmos lazara excepcion.
 			throw new Exception("No hay alumnos dados de alta");
 		} else {
 			for (int i = 0; i < lista.size(); i++) {// recorrerá lista de alumnos.
-<<<<<<< HEAD
-				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());//muestra al alunmo
-				for (int j = 0; j < lista.get(i).getFaltas().size(); j++) {//recorre las faltas
-					fechaAux = lista.get(i).getFaltas().get(j).getDia();//obtiene el dia de las faltas
-					System.out.println("\nDia: " + fechaAux.getDia() + "/" + fechaAux.getMes() + "/" + fechaAux.getAgno());//muestra la fecha de la faltas
-					lista.get(i).getFaltas().get(j).getHorario().imprimeHora();//muestra las faltas que tiene en cada sesion.
-=======
+
 				
 				System.out.println("Alumno: " + lista.get(i).getApellidos() + " " + lista.get(i).getNombre());//Muestra el alumno
 				
@@ -733,7 +723,7 @@ public class PracticaGrupoMain {
 					System.out.println("\nDia: " + fechaAux.getDia() + "/" + fechaAux.getMes() + "/" + fechaAux.getAgno());//Muestra la fecha
 					
 					lista.get(i).getFaltas().get(j).getHorario().imprimeHora();//Muestra las faltas de esas sesiones
->>>>>>> 5921a9d127379ac687b6fbe24de3c6ceefbe517d
+
 				}
 			}
 		}
